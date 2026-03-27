@@ -7975,6 +7975,7 @@ Standard Deviation: 0.0586
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Cross-Validation-Role">Cross-Validation Role<a class="anchor-link" href="#Cross-Validation-Role">¶</a></h3><ul>
+<li><strong>Implementation in Search:</strong> Both <code>GridSearchCV</code> and <code>RandomizedSearchCV</code> inherently use Cross-Validation. This means for every combination of hyperparameters, the model is evaluated across multiple folds rather than a single split.</li>
 <li><strong>Reliability:</strong> Cross-Validation (K-Fold CV) provides a <strong>more robust estimate</strong> of model performance than a single Train-Test split. A single split might be lucky (very easy samples in test set = high accuracy) or unlucky (very hard samples = low accuracy). CV averages out these biases.</li>
 <li><strong>Prevent Overfitting:</strong> By rotating the validation set across k folds, we ensure the model performs consistently across different data partitions, reducing the risk of optimizing for a specific subset.</li>
 <li><strong>Dataset Size:</strong> For small datasets like Wine, every sample is valuable. Standard CV allows us to use nearly all data for both training and validation (in a round-robin fashion), maximizing the use of our limited data.</li>
@@ -8182,9 +8183,10 @@ Conclusion: Tuning improved accuracy.
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Conclusion-on-Tuning">Conclusion on Tuning<a class="anchor-link" href="#Conclusion-on-Tuning">¶</a></h3><ul>
-<li><strong>Tuning Effectiveness:</strong> Even if the accuracy is similar, tuning often finds a <strong>simpler</strong> and more <strong>explainable</strong> decision tree (e.g., lower depth, fewer leaves). This is crucial for avoiding overfitting on new, unseen data, especially if the original dataset is small.</li>
+<li><strong>Effect on Accuracy:</strong> Hyperparameter tuning directly affects the accuracy by finding the optimal balance between underfitting and overfitting. While a baseline model might achieve perfect training accuracy but lower test accuracy (due to overfitting), tuning restrains the model, which often <strong>increases or stabilizes unseen test accuracy</strong>.</li>
+<li><strong>Effect on Model Generalization:</strong> Even if the test accuracy remains similar to the baseline, tuning often finds a <strong>simpler</strong> and more <strong>explainable</strong> decision tree (e.g., lower depth, fewer leaves). This is crucial for avoiding overfitting on new, unseen data, especially if the original dataset is small.</li>
 <li><strong>Baseline vs Tuned:</strong><ul>
-<li><strong>Baseline (Default):</strong> Often builds a very complex tree (depth=None, all splits) to fit the training data perfectly (100% accuracy). This is risky.</li>
+<li><strong>Baseline (Default):</strong> Often builds a very complex tree (depth=None, all splits) to fit the training data perfectly (100% accuracy). This is risky and unseen test accuracy might suffer.</li>
 <li><strong>Tuned Parameters:</strong> Restricts the tree growth (e.g., <code>max_depth</code> or <code>min_samples_leaf</code>), ensuring the model generalizes better, even if test accuracy is slightly lower or the same.</li>
 </ul>
 </li>
