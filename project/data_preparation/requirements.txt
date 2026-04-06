@@ -1,0 +1,22 @@
+# OCR
+typhoon-ocr>=0.2.0
+
+# PDF Processing
+pymupdf>=1.24.0
+pdfplumber>=0.11.0
+pdf2image>=1.17.0
+Pillow>=10.0.0
+
+# Thai NLP
+pythainlp>=5.0.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.26.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+requests>=2.31.0
+tenacity>=8.2.0
+jsonschema>=4.21.0
