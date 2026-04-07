@@ -40,12 +40,12 @@ ERA_LABELS = {
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Constitution Metadata
-# source_type: "image_pdf" → ต้องทำ OCR
-#              "text_pdf"  → ดึงข้อความได้โดยตรง
+# source_type: "image_pdf" → ต้องทำ OCR (ไฟล์ที่ 1–32)
+#              "text_pdf"  → ดึงข้อความได้โดยตรง (ไฟล์ที่ 33–38)
 # ─────────────────────────────────────────────────────────────────────────────
 CONSTITUTIONS = [
     # ══════════════════════════════════════════════════════
-    # IMAGE PDFs — ต้องทำ OCR ด้วย Typhoon OCR 1.5
+    # IMAGE PDFs — ต้องทำ OCR ด้วย Typhoon OCR 1.5 (ไฟล์ที่ 1–32)
     # ══════════════════════════════════════════════════════
     {
         "id": "const_2475",
@@ -216,7 +216,7 @@ CONSTITUTIONS = [
         "notes": "ยุคจอมพลสฤษดิ์ ธนะรัชต์",
     },
     # ══════════════════════════════════════════════════════
-    # TEXT PDFs — ดึงข้อความด้วย PyMuPDF / pdfplumber
+    # IMAGE PDFs (ต่อ) — ไฟล์ที่ 13–32 ยังเป็น Image PDF ต้องทำ OCR
     # ══════════════════════════════════════════════════════
     {
         "id": "const_2511",
@@ -226,7 +226,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2511",
         "date_announced": "1968-06-20",
         "source_url": "https://hdl.handle.net/20.500.14156/290428",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "13_รัฐธรรมนูญแห่งราชอาณาจักรไทย พ.ศ. 2511.pdf",
         "era": "dictatorship",
         "regime_type": "military",
@@ -240,7 +240,7 @@ CONSTITUTIONS = [
         "name_short": "ธรรมนูญ 2515",
         "date_announced": "1972-12-15",
         "source_url": "https://hdl.handle.net/20.500.14156/290429",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "14_ธรรมนูญการปกครองราชอาณาจักร พุทธศักราช 2515.pdf",
         "era": "dictatorship",
         "regime_type": "military",
@@ -254,7 +254,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2517",
         "date_announced": "1974-10-07",
         "source_url": "https://hdl.handle.net/20.500.14156/290430",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "15_รัฐธรรมนูญแห่งราชอาณาจักรไทย พ.ศ. 2517.pdf",
         "era": "democratic_spring",
         "regime_type": "civilian",
@@ -268,7 +268,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2518",
         "date_announced": "1975-01-23",
         "source_url": "https://hdl.handle.net/20.500.14156/290431",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "16_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม พุทธศักราช 2518.pdf",
         "era": "democratic_spring",
         "regime_type": "civilian",
@@ -282,7 +282,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2519",
         "date_announced": "1976-10-22",
         "source_url": "https://hdl.handle.net/20.500.14156/290432",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "17_รัฐธรรมนูญแห่งราชอาณาจักรไทย พ.ศ. 2519.pdf",
         "era": "democratic_spring",
         "regime_type": "military",
@@ -296,7 +296,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2520",
         "date_announced": "1977-11-09",
         "source_url": "https://hdl.handle.net/20.500.14156/290433",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "18_รัฐธรรมนูญการปกครองราชอาณาจักร พ.ศ. 2520.pdf",
         "era": "semi_democracy",
         "regime_type": "military",
@@ -310,7 +310,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2521",
         "date_announced": "1978-12-22",
         "source_url": "https://hdl.handle.net/20.500.14156/290434",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "19_รัฐธรรมนูญแห่งราชอาณาจักรไทย พุทธศักราช 2521.pdf",
         "era": "semi_democracy",
         "regime_type": "semi_military",
@@ -324,7 +324,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2528",
         "date_announced": "1985-08-14",
         "source_url": "https://hdl.handle.net/20.500.14156/290435",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "20_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม พ.ศ. 2528.pdf",
         "era": "semi_democracy",
         "regime_type": "semi_military",
@@ -338,7 +338,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2532",
         "date_announced": "1989-08-30",
         "source_url": "https://hdl.handle.net/20.500.14156/290436",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "21_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 2) พ.ศ. 2532.pdf",
         "era": "semi_democracy",
         "regime_type": "semi_military",
@@ -352,7 +352,7 @@ CONSTITUTIONS = [
         "name_short": "ธรรมนูญ 2534",
         "date_announced": "1991-03-01",
         "source_url": "https://hdl.handle.net/20.500.14156/290437",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "22_ธรรมนูญการปกครองราชอาณาจักร พุทธศักราช 2534.pdf",
         "era": "modern_democracy",
         "regime_type": "military",
@@ -366,7 +366,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2534",
         "date_announced": "1991-12-09",
         "source_url": "https://hdl.handle.net/20.500.14156/290439",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "23_รัฐธรรมนูญแห่งราชอาณาจักรไทย พ.ศ. 2534.pdf",
         "era": "modern_democracy",
         "regime_type": "military",
@@ -380,7 +380,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2535 (ฉบับที่ 1)",
         "date_announced": "1992-06-30",
         "source_url": "https://hdl.handle.net/20.500.14156/290448",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "24_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 1) พุทธศักราช 2535.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -394,7 +394,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2535 (ฉบับที่ 2)",
         "date_announced": "1992-06-30",
         "source_url": "https://hdl.handle.net/20.500.14156/290449",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "25_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 2) พุทธศักราช 2535.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -408,7 +408,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2535 (ฉบับที่ 3)",
         "date_announced": "1992-06-30",
         "source_url": "https://hdl.handle.net/20.500.14156/290450",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "26_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 3) พุทธศักราช 2535.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -422,7 +422,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2535 (ฉบับที่ 4)",
         "date_announced": "1992-09-12",
         "source_url": "https://hdl.handle.net/20.500.14156/290451",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "27_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 4) พุทธศักราช 2535.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -436,7 +436,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2538",
         "date_announced": "1995-02-10",
         "source_url": "https://hdl.handle.net/20.500.14156/290416",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "28_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 5) พุทธศักราช 2538.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -450,7 +450,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2539",
         "date_announced": "1996-10-22",
         "source_url": "https://hdl.handle.net/20.500.14156/290427",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "29_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 6) พุทธศักราช 2539.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -464,7 +464,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2540",
         "date_announced": "1997-10-11",
         "source_url": "https://hdl.handle.net/20.500.14156/290438",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "30_รัฐธรรมนูญแห่งราชอาณาจักรไทย พุทธศักราช 2540.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -478,7 +478,7 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2548",
         "date_announced": "2005-07-11",
         "source_url": "https://hdl.handle.net/20.500.14156/290443",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "31_รัฐธรรมนูญแห่งราชอาณาจักรไทย แก้ไขเพิ่มเติม (ฉบับที่ 1) พุทธศักราช 2548.pdf",
         "era": "modern_democracy",
         "regime_type": "civilian",
@@ -492,12 +492,15 @@ CONSTITUTIONS = [
         "name_short": "รธน. 2549 (ชั่วคราว)",
         "date_announced": "2006-10-01",
         "source_url": "https://hdl.handle.net/20.500.14156/290444",
-        "source_type": "text_pdf",
+        "source_type": "image_pdf",
         "filename": "32_รัฐธรรมนูญแห่งราชอาณาจักรไทย (ฉบับชั่วคราว) พุทธศักราช 2549.pdf",
         "era": "post_coup_2006",
         "regime_type": "military",
         "notes": "หลังรัฐประหาร 19 กันยายน 2549",
     },
+    # ══════════════════════════════════════════════════════
+    # TEXT PDFs — ดึงข้อความด้วย PyMuPDF / pdfplumber (ไฟล์ที่ 33–38)
+    # ══════════════════════════════════════════════════════
     {
         "id": "const_2550",
         "year_th": 2550,
@@ -616,8 +619,8 @@ if __name__ == "__main__":
     image_pdfs = get_image_pdfs()
     text_pdfs = get_text_pdfs()
     print(f"รัฐธรรมนูญทั้งหมด    : {len(CONSTITUTIONS)} ฉบับ")
-    print(f"Image PDFs (OCR)     : {len(image_pdfs)} ฉบับ")
-    print(f"Text PDFs (Extract)  : {len(text_pdfs)} ฉบับ")
+    print(f"Image PDFs (OCR)    : {len(image_pdfs)} ฉบับ (ไฟล์ 1–32, พ.ศ. 2475–2549)")
+    print(f"Text PDFs (Extract) : {len(text_pdfs)} ฉบับ (ไฟล์ 33–38, พ.ศ. 2550–2564)")
     print()
     print("Image PDFs:")
     for c in image_pdfs:
