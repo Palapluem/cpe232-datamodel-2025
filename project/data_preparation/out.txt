@@ -1,0 +1,4 @@
+  File "C:\Users\DealnotWise5470\Documents\GitHub\cpe232-datamodel-2025\project\data_preparation\rewrite_notebook.py", line 658
+    In affected PDFs,  √–Õ” is stored as a no-break space (U+00A0 or U+0020)
+                                                              ^
+SyntaxError: invalid decimal literal
