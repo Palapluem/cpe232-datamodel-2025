@@ -114,6 +114,21 @@
 ### **3.1 การสกัดข้อความจากเอกสาร PDF (Data Extraction)**
 เนื่องจากรูปแบบไฟล์มีความแตกต่างกัน กระบวนการสกัดจึงถูกแบ่งเป็น 2 วิธี:
 * **สำหรับข้อมูลกลุ่ม พ.ศ. 2475–2548 (Image PDF):** ทำการสกัดตัวอักษรด้วย Optical Character Recognition (OCR) ผ่าน **Typhoon OCR API** ที่รองรับภาษาไทยได้ดีเยี่ยม โดยวนลูปอ่านทีละหน้าและบันทึกผล
+  
+  **ตัวอย่างโค้ด (Typhoon OCR Extraction):**
+  ```python
+  def ocr_constitution(meta: dict, skip_existing: bool = True):
+      # ... โค้ดส่วนการจัดการไฟล์ ...
+      for page_num in range(doc.page_count):
+          base64_image = encode_image_to_base64(page)
+          payload = {
+              "model": "typhoon-v1.5x-70b-vision-instruct",
+              "messages": [{"role": "user", "content": [{"type": "text", "text": "Extract all text from this image."}, {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}}]}]
+          }
+          response = requests.post("https://api.opentyphoon.ai/v1/chat/completions", headers=headers, json=payload)
+          pages_data.append({"page_num": page_num + 1, "text": response.json()['choices'][0]['message']['content']})
+      # ... บันทึกเป็น JSON ...
+  ```
 * **สำหรับข้อมูลกลุ่ม พ.ศ. 2550–2564 (Text PDF):** ใช้ **PyMuPDF** (`fitz`) เพื่อดึงข้อความดิจิทัลโดยตรง ซึ่งรวดเร็วและมีความแม่นยำสูง และมีการรองรับด้วย `pdfplumber` หากพบปัญหาข้อความสูญหายในหน้าใดหน้าหนึ่ง
 
 ### **3.2 การจัดการและทำความสะอาดข้อมูลก่อนนำไปใช้ (Cleaning & Structuring)**
@@ -125,8 +140,45 @@
    - ใช้หลักการของ Regular Expression (RegEx) เพื่อตรวจจับและเชื่อมพยัญชนะที่เว้นวรรคกับสระอา ให้กลับมาเป็นสระอำ (`_fix_sara_am()`)
 3. **การกำจัดส่วนเกิน (Noise Removal):**
    - ลบรูปแบบข้อความส่วนหัวของราชกิจจานุเบกษา (`_remove_headers()`) เพื่อให้เหลือเพียงเนื้อหากฎหมาย
+
+  **ตัวอย่างโค้ด (Data Cleaning & Regex):**
+  ```python
+  import re
+  import unicodedata
+
+  def _fix_sara_am(text: str) -> str:
+      # แก้ปัญหาสระอำแยกส่วน (เช่น "จ านวน" -> "จำนวน")
+      SARA_AM_PATTERN = re.compile('([ก-ฮ][็-๋]?) (า)')
+      return SARA_AM_PATTERN.sub(lambda m: m.group(1) + 'ำ', text)
+
+  def _remove_headers(text: str) -> str:
+      # ตัดข้อความราชกิจจานุเบกษาและหน้าออก
+      patterns = [
+          r"\u0E2B\u0E19\u0E49\u0E32\s*\d+\s*\u0E40\u0E25\u0E48\u0E21\s*\d+.*?\u0E23\u0E32\u0E0A\u0E01\u0E34\u0E08\u0E08\u0E32\u0E19\u0E38\u0E40\u0E1A\u0E01\u0E29\u0E32[^\n]*",
+          r"^\s*-\s*\d+\s*-\s*$"
+      ]
+      for pattern in patterns:
+          text = re.sub(pattern, "", text, flags=re.MULTILINE | re.IGNORECASE)
+      return text
+  ```
+
 4. **การบันทึกข้อมูลแบบมีโครงสร้าง (JSON Structuring):**
    - บันทึกผลลัพธ์ทั้งหมดลงในโฟลเดอร์ `processed/` ให้อยู่ในรูป JSON ตามที่ได้ออกแบบไว้ในส่วนที่ 2.3 เพื่อเตรียมส่งต่อให้ขั้นตอนของแบบจำลอง
+
+### **3.3 สรุปผลลัพธ์การเตรียมข้อมูล (Data Preparation Results)**
+หลังจากผ่านกระบวนการสกัดและทำความสะอาดข้อมูล ได้ผลลัพธ์เป็นไฟล์ JSON ทั้งหมด 38 ไฟล์ ครอบคลุมรัฐธรรมนูญและธรรมนูญการปกครองทั้งหมด โดยมีตัวอย่างข้อมูลภาพรวมจากการดึงเข้า Pandas DataFrame ดังนี้:
+
+| Year (B.E.) | Document | Type | Pages | Words (approx) |
+| :--- | :--- | :--- | :--- | :--- |
+| 2475 | Constitution 2475 | Image PDF | 23 | 987 |
+| 2489 | Constitution 2489 | Image PDF | 51 | 2,021 |
+| 2492 | Constitution 2492 | Image PDF | 80 | 3,238 |
+| 2517 | Constitution 2517 | Image PDF | 90 | 4,033 |
+| 2540 | Constitution 2540 | Image PDF | 99 | 7,693 |
+| 2550 | Constitution 2550 | Text PDF | 127 | 9,367 |
+| 2560 | Constitution 2560 | Text PDF | 90 | 7,939 |
+
+**(รวมจำนวนคำทั้งหมดประมาณ 61,301 คำจากเอกสาร 38 ฉบับ)**
 
 ---
 
