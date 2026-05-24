@@ -1,0 +1,904 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows,positioning,fit,calc,trees}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+\usepackage{needspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{array}
+
+\setmainfont{TH Sarabun New}
+\setmonofont{Courier New}
+
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\linespread{1.15}
+
+\definecolor{darkblue}{RGB}{0,55,107}
+\definecolor{teal}{RGB}{0,123,138}
+\definecolor{lightgray}{RGB}{242,242,242}
+
+\newcommand{\blank}[1]{\fbox{\rule{0pt}{1.1em}\hspace{#1}}}
+\newcommand{\ans}[1]{\textbf{#1}}
+\newcommand{\tf}[1]{\fbox{\rule{0pt}{1.1em}\hspace{2.2cm}}}
+
+\begin{document}
+
+% ─── Cover ──────────────────────────────────────────────────────────────────
+\begin{center}
+    \textbf{\Large CPE 232 Data Models}\\[0.2cm]
+    \textbf{\large Mock Final Exam (ข้อสอบจำลองปลายภาค)}\\[0.15cm]
+    เวลาสอบ: 3 ชั่วโมง \quad|\quad คะแนนเต็ม: 100 คะแนน \quad|\quad สอบ Onsite
+\end{center}
+\hrule
+\vspace{0.35cm}
+
+\noindent\textbf{ประกาศและขอบเขตข้อสอบ}\\
+ข้อสอบครอบคลุมเนื้อหา Lecture 6--9 ได้แก่ Machine Learning Classification, Regression, Parameter Tuning และ Clustering
+ข้อสอบ\textbf{เน้นข้อเขียนและคำนวณ (ประมาณ 90\%)} MCQ มีเพียงเล็กน้อย\\
+\textbf{สิ่งที่อนุญาต:} เครื่องเขียน, บัตรนักศึกษา และ \textbf{Formula Sheet} ที่อาจารย์แจกให้ (ไม่ต้องท่องสูตร)\\
+\textbf{โครงสร้างคะแนน:} Part 1 (10) \;|\; Part 2 (10) \;|\; Part 3 (15) \;|\; Part 4 (20) \;|\; Part 5 (45)
+
+\vspace{0.4cm}
+
+% ─── Part 1 ─────────────────────────────────────────────────────────────────
+\section*{Part 1: Multiple Choice / Multiple Selection / True-False (10 คะแนน)}
+
+\subsection*{1.1 Multiple Choice — เลือกคำตอบที่ถูกต้องที่สุด 1 ข้อ (5 ข้อ ข้อละ 1 คะแนน)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+
+\needspace{7\baselineskip}
+\item ข้อใดอธิบาย Naive Bayes Classifier ได้ถูกต้องที่สุด?
+\begin{enumerate}[label=\alph*.]
+    \item สร้างต้นไม้ตัดสินใจโดยใช้ Information Gain เลือก attribute ที่ดีที่สุด
+    \item ใช้ทฤษฎีของเบย์และสมมติว่า features ทุกตัวมีความเป็นอิสระต่อกัน
+    \item หาจุดที่ใกล้ที่สุด k จุดในพื้นที่ feature แล้ว vote ผลลัพธ์
+    \item สร้าง Hyperplane เพื่อแบ่งกลุ่มข้อมูลให้มี margin กว้างที่สุด
+\end{enumerate}
+
+\needspace{7\baselineskip}
+\item เหตุใด MSE จึงลงโทษ error ขนาดใหญ่หนักกว่า MAE?
+\begin{enumerate}[label=\alph*.]
+    \item MSE ยก error เป็นกำลังสองทำให้ค่า error ที่มากถูก amplify มากกว่า
+    \item MSE คำนวณค่า median แทนค่าเฉลี่ยจึงไม่ไว้วางใจ outlier
+    \item MSE หารด้วย $\sqrt{n}$ ส่วน MAE หารด้วย $n$
+    \item MSE ใช้ log scale แทน linear scale ในการวัด error
+\end{enumerate}
+
+\needspace{7\baselineskip}
+\item ข้อใดเป็นข้อดีหลักของ k-Fold Cross-Validation เมื่อเทียบกับ Single Train/Test Split?
+\begin{enumerate}[label=\alph*.]
+    \item ใช้เวลา training น้อยกว่าเพราะ dataset เล็กลง
+    \item ลด variance ของการประเมิน model เพราะใช้ข้อมูลทุกส่วนเป็นทั้ง train และ validation
+    \item ไม่จำเป็นต้องสุ่มแบ่งข้อมูลก่อน
+    \item รับประกันว่า model จะไม่ overfit กับ training data
+\end{enumerate}
+
+\needspace{7\baselineskip}
+\item DBSCAN มีข้อได้เปรียบเหนือ K-Means อย่างไร?
+\begin{enumerate}[label=\alph*.]
+    \item ทำงานเร็วกว่าบน dataset ขนาดใหญ่เสมอ
+    \item ไม่ต้องระบุจำนวน cluster ล่วงหน้า และจัดการ noise/outlier ได้
+    \item Cluster ที่ได้มี centroid ชัดเจนทุกครั้ง
+    \item ต้องการ memory น้อยกว่าเพราะไม่เก็บ proximity matrix
+\end{enumerate}
+
+\needspace{7\baselineskip}
+\item Model มี Training Accuracy = 97\%, Test Accuracy = 62\% สถานการณ์นี้คืออะไร?
+\begin{enumerate}[label=\alph*.]
+    \item Overfitting
+    \item Underfitting
+    \item Good Generalization
+    \item High Bias, High Variance พร้อมกัน
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection*{1.2 Multiple Selection — เลือกทุกข้อที่ถูกต้อง (3 ข้อ ข้อละ 1 คะแนน)}
+\textit{หมายเหตุ: ต้องเลือกครบถ้วนทุกข้อที่ถูกจึงจะได้คะแนน}
+
+\begin{enumerate}[label=\textbf{\arabic*.},start=6]
+
+\needspace{8\baselineskip}
+\item ข้อใดบ้างเป็น \textbf{Hyperparameter} (กำหนดก่อน training)?
+\begin{enumerate}[label=\alph*.]
+    \item \texttt{max\_depth} ของ Decision Tree
+    \item ค่า weight ที่ model เรียนรู้ระหว่าง Gradient Descent
+    \item Learning Rate ($\alpha$) ใน Gradient Descent
+    \item จำนวนต้นไม้ใน Random Forest (\texttt{n\_estimators})
+    \item ค่า bias term ที่ optimize ผ่าน loss function
+\end{enumerate}
+
+\needspace{8\baselineskip}
+\item ข้อใดบ้างช่วย\textbf{ลด Overfitting} ได้?
+\begin{enumerate}[label=\alph*.]
+    \item เพิ่มข้อมูล training
+    \item ลด \texttt{max\_depth} ใน Decision Tree
+    \item เพิ่มจำนวน features ใน dataset
+    \item ใช้ L1/L2 Regularization
+    \item เพิ่ม learning rate เป็น 2 เท่า
+\end{enumerate}
+
+\needspace{8\baselineskip}
+\item ข้อใดบ้างเป็นข้อความที่\textbf{ถูกต้อง}เกี่ยวกับ Silhouette Score?
+\begin{enumerate}[label=\alph*.]
+    \item ค่าอยู่ในช่วง $[-1, +1]$
+    \item ค่าใกล้ +1 บ่งชี้ว่า cluster มีความแน่นและแยกจากกันชัดเจน
+    \item ค่าลบหมายความว่าจุดนั้นถูก assign ผิด cluster
+    \item ค่า 0 บ่งชี้ว่า cluster สมบูรณ์แบบ
+    \item ใช้ได้เฉพาะกับ K-Means เท่านั้น
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection*{1.3 True/False — ระบุ จริง (T) หรือ เท็จ (F) (4 ข้อ ข้อละ 0.5 คะแนน)}
+\textit{เขียน T หรือ F ในช่องว่าง}
+
+\begin{enumerate}[label=\textbf{\arabic*.},start=9]
+    \item \tf{} \quad Entropy = 0 หมายความว่า node นั้น\textbf{ไม่บริสุทธิ์} (impure) อย่างสมบูรณ์
+    \vspace{0.3cm}
+    \item \tf{} \quad ค่า $R^2$ (Coefficient of Determination) อาจมีค่าติดลบได้ในบางกรณี
+    \vspace{0.3cm}
+    \item \tf{} \quad K-Means รับประกันว่า converge ไปที่ global optimum เสมอ
+    \vspace{0.3cm}
+    \item \tf{} \quad Stratified k-Fold Cross-Validation รักษาสัดส่วน class ในแต่ละ fold ให้ใกล้เคียงกับ dataset ต้นฉบับ
+    \vspace{0.3cm}
+\end{enumerate}
+
+\newpage
+
+% ─── Part 2 ─────────────────────────────────────────────────────────────────
+\section*{Part 2: Definition — เขียนนิยามความหมายของคำศัพท์ต่อไปนี้ (10 คะแนน, ข้อละ 1 คะแนน)}
+\textbf{คำชี้แจง:} ตอบเป็นภาษาไทยหรือภาษาอังกฤษก็ได้ ให้นิยามที่ครอบคลุมทั้งความหมายและบริบทการใช้งาน
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Entropy (เอนโทรปี)} \hfill [Lecture 6]
+    \vspace{2.2cm}
+
+    \item \textbf{Information Gain} \hfill [Lecture 6]
+    \vspace{2.2cm}
+
+    \item \textbf{Confusion Matrix} \hfill [Lecture 6]
+    \vspace{2.2cm}
+
+    \item \textbf{Overfitting} \hfill [Lecture 8]
+    \vspace{2.2cm}
+
+    \item \textbf{Gradient Descent} \hfill [Lecture 7]
+    \vspace{2.2cm}
+
+    \item \textbf{Hyperparameter} \hfill [Lecture 8]
+    \vspace{2.2cm}
+
+    \item \textbf{k-Fold Cross-Validation} \hfill [Lecture 8]
+    \vspace{2.2cm}
+
+    \item \textbf{Centroid} \hfill [Lecture 9]
+    \vspace{2.2cm}
+
+    \item \textbf{Silhouette Score} \hfill [Lecture 9]
+    \vspace{2.2cm}
+
+    \item \textbf{DBSCAN (Density-Based Spatial Clustering of Applications with Noise)} \hfill [Lecture 9]
+    \vspace{2.2cm}
+\end{enumerate}
+
+\newpage
+
+% ─── Part 3 ─────────────────────────────────────────────────────────────────
+\section*{Part 3: Short Answer \& Data Interpretation (15 คะแนน, ข้อละ 3 คะแนน)}
+\textbf{คำชี้แจง:} ตอบสั้น 2--4 บรรทัด เน้นการ ``ตีความ'' และ ``อธิบายเหตุผล'' ไม่ใช่เพียงแค่นิยาม
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+
+\needspace{8\baselineskip}
+\item \textbf{[Lecture 6]} เพราะเหตุใดจึงควรเลือกใช้ \textbf{Random Forest} แทน \textbf{Decision Tree} เดี่ยว ในกรณีที่ต้องการ model ที่ generalize ดี? อธิบายกลไกที่ทำให้ Random Forest ดีกว่า
+\vspace{3.5cm}
+
+\needspace{8\baselineskip}
+\item \textbf{[Lecture 8]} ระบบ AI ผ่าน training ด้วย Training Accuracy = 98\% แต่เมื่อทดสอบกับข้อมูลใหม่ Test Accuracy = 62\% ปัญหาคืออะไร? ควรแก้ไขอย่างไรบ้าง (ระบุอย่างน้อย 2 วิธี)
+\vspace{3.5cm}
+
+\needspace{10\baselineskip}
+\item \textbf{[Lecture 6]} จาก Confusion Matrix ด้านล่าง จงตีความผลลัพธ์และอธิบายว่า classifier นี้มีจุดแข็งและจุดอ่อนอะไร ควรปรับปรุงอย่างไร
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|cc}
+    \hline
+    \rowcolor{cyan!15}
+    & \textbf{ทำนาย: บวก (+)} & \textbf{ทำนาย: ลบ (-)} \\
+    \hline
+    \textbf{จริง: บวก (+)} & 20 (TP) & 80 (FN) \\
+    \textbf{จริง: ลบ (-)} & 5 (FP) & 95 (TN) \\
+    \hline
+\end{tabular}
+\end{center}
+\vspace{3.5cm}
+
+\needspace{8\baselineskip}
+\item \textbf{[Lecture 9]} ผลการ cluster ด้วย K-Means ได้ Silhouette Score = 0.12 ค่านี้บอกอะไร? และคุณจะใช้วิธีใดในการ diagnose ว่าควรใช้กี่ cluster ที่เหมาะสม?
+\vspace{3.5cm}
+
+\needspace{8\baselineskip}
+\item \textbf{[Lecture 8]} อธิบายปรากฏการณ์ ``Local Minimum'' ใน Gradient Descent ว่าเกิดขึ้นได้อย่างไร และ optimizer สมัยใหม่แก้ปัญหานี้อย่างไร (ยก optimizer อย่างน้อย 1 ตัวพร้อมอธิบาย)
+\vspace{3.5cm}
+
+\end{enumerate}
+
+\newpage
+
+% ─── Part 4 ─────────────────────────────────────────────────────────────────
+\section*{Part 4: Long Answer / Essay (20 คะแนน)}
+\textbf{คำชี้แจง:} ตอบอย่างครบถ้วน ใช้ตารางหรือเรียงความก็ได้ ประเมินจากความครบถ้วน ความถูกต้อง และความชัดเจน
+
+\subsection*{ข้อ 1 — เปรียบเทียบ 4 Classification Models (10 คะแนน)}
+
+ระบบบริษัท FinTech ต้องการสร้าง model จำแนกว่าลูกค้ารายใดมีความเสี่ยงสูง (High Risk) หรือต่ำ (Low Risk) ในการผิดนัดชำระสินเชื่อ Dataset มี 50,000 samples, 30 features, class imbalance (High Risk 15\%, Low Risk 85\%)
+
+\textbf{จงเปรียบเทียบ 4 Classification Algorithms ต่อไปนี้:}
+\begin{itemize}
+    \item Decision Tree
+    \item k-Nearest Neighbors (KNN)
+    \item Naive Bayes
+    \item Random Forest
+\end{itemize}
+
+\textbf{การเปรียบเทียบต้องครอบคลุม:}
+\begin{enumerate}
+    \item หลักการทำงานโดยย่อ (1--2 ประโยค/algorithm)
+    \item ข้อดีและข้อจำกัดหลัก
+    \item ความเหมาะสมกับโจทย์นี้ โดยเฉพาะเรื่อง class imbalance และ dataset ขนาดใหญ่
+    \item สรุปว่าควรเลือก algorithm ใด พร้อมเหตุผล
+\end{enumerate}
+
+\vspace{9.5cm}
+
+\newpage
+
+\subsection*{ข้อ 2 — Types of Cross-Validation (10 คะแนน)}
+
+\textbf{ส่วนที่ 2.1} อธิบาย Cross-Validation 4 แบบต่อไปนี้ โดยระบุ concept, ข้อดี, ข้อจำกัด, และเหมาะกับ dataset แบบใด:
+\begin{itemize}
+    \item k-Fold Cross-Validation
+    \item Stratified k-Fold Cross-Validation
+    \item Leave-One-Out Cross-Validation (LOO-CV)
+    \item Time Series Cross-Validation
+\end{itemize}
+
+\vspace{7cm}
+
+\textbf{ส่วนที่ 2.2} สถานการณ์ต่อไปนี้ควรใช้ Cross-Validation แบบใด พร้อมให้เหตุผล (1 คะแนน/ข้อ)
+
+\begin{enumerate}[label=\alph*.]
+    \item Dataset ราคาหุ้น SET50 ย้อนหลัง 5 ปี ต้องการ predict ราคาวันถัดไป\\
+    ตอบ: \blank{8cm}
+    \vspace{0.5cm}
+    \item Dataset ตรวจมะเร็ง 200 samples (Positive 10\%, Negative 90\%)\\
+    ตอบ: \blank{8cm}
+    \vspace{0.5cm}
+\end{enumerate}
+
+\newpage
+
+% ─── Part 5 ─────────────────────────────────────────────────────────────────
+\section*{Part 5: Calculation (45 คะแนน)}
+\textbf{คำชี้แจง:} แสดงวิธีทำให้ครบทุกขั้นตอน คำตอบที่ไม่มีวิธีทำจะไม่ได้คะแนน
+
+\vspace{0.3cm}
+\subsection*{ข้อ 5.1 — Decision Tree: Entropy \& Information Gain (10 คะแนน)}
+
+\textbf{กำหนดให้:} $\log_2(3) \approx 1.585$, \quad $\log_2(5) \approx 2.322$, \quad $\log_2(7) \approx 2.807$
+
+ข้อมูลชุดหนึ่งสำหรับ predict ว่าลูกค้าจะ \textbf{``ซื้อสินค้า (ใช่/ไม่ใช่)''} มีทั้งหมด 8 samples ดังนี้:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \textbf{\#} & \textbf{รายได้ (Income)} & \textbf{นักศึกษา (Student)} & \textbf{อายุ (Age)} & \textbf{ซื้อ (Buy)} \\
+    \hline
+    1 & สูง & ใช่ & น้อยกว่า 30 & ใช่ \\
+    2 & สูง & ใช่ & น้อยกว่า 30 & ใช่ \\
+    3 & สูง & ไม่ใช่ & 30--50 & ใช่ \\
+    4 & ปานกลาง & ใช่ & 30--50 & ใช่ \\
+    5 & ปานกลาง & ไม่ใช่ & น้อยกว่า 30 & ไม่ใช่ \\
+    6 & ต่ำ & ไม่ใช่ & น้อยกว่า 30 & ไม่ใช่ \\
+    7 & ต่ำ & ใช่ & 30--50 & ไม่ใช่ \\
+    8 & ต่ำ & ไม่ใช่ & 30--50 & ไม่ใช่ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{5.1.1} (2 คะแนน) คำนวณ $\text{Entropy}(S)$ ของ dataset ทั้งหมด
+\vspace{2.5cm}
+
+\textbf{5.1.2} (6 คะแนน) คำนวณ $\text{Information Gain}$ ของทุก attribute ได้แก่ \textbf{รายได้, นักศึกษา, อายุ} แสดงวิธีคิดทุกขั้น
+\vspace{7.5cm}
+
+\textbf{5.1.3} (2 คะแนน) ควรเลือก attribute ใดเป็น \textbf{Root Node} ของ Decision Tree? อธิบายเหตุผล
+\vspace{2cm}
+
+\newpage
+
+\subsection*{ข้อ 5.2 — Confusion Matrix Metrics (8 คะแนน)}
+
+ระบบ AI วินิจฉัยโรคเบาหวาน ทดสอบกับ 200 patients ได้ผลดังนี้:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{c|cc|c}
+    \hline
+    \rowcolor{cyan!15}
+    & \textbf{ทำนาย: ป่วย (+)} & \textbf{ทำนาย: ไม่ป่วย (-)} & \textbf{รวม} \\
+    \hline
+    \textbf{จริง: ป่วย (+)} & 60 & 20 & 80 \\
+    \textbf{จริง: ไม่ป่วย (-)} & 40 & 80 & 120 \\
+    \hline
+    \textbf{รวม} & 100 & 100 & 200 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{5.2.1} (5 คะแนน) คำนวณค่าต่อไปนี้พร้อมแสดงวิธีคิด:
+\begin{itemize}
+    \item Accuracy
+    \item Precision
+    \item Recall (Sensitivity)
+    \item Specificity
+    \item F1-Score
+\end{itemize}
+\vspace{6cm}
+
+\textbf{5.2.2} (3 คะแนน) จากผลลัพธ์ข้างต้น จงตีความ: ระบบนี้เหมาะสมสำหรับการวินิจฉัยโรคหรือไม่? metric ใดสำคัญที่สุดในบริบทนี้? และควรปรับปรุงอย่างไร?
+\vspace{3.5cm}
+
+\newpage
+
+\subsection*{ข้อ 5.3 — Regression: MSE, RMSE, MAE, R² และ Gradient Descent (10 คะแนน)}
+
+จาก dataset ต่อไปนี้ model Linear Regression ให้ค่า predict ดังนี้:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \textbf{\#} & $y_{\text{actual}}$ & $y_{\text{predicted}}$ \\
+    \hline
+    1 & 2  & 2  \\
+    2 & 4  & 4  \\
+    3 & 5  & 6  \\
+    4 & 8  & 8  \\
+    5 & 11 & 10 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{5.3.1} (7 คะแนน) คำนวณค่าต่อไปนี้พร้อมแสดงวิธีคิดทุกขั้น:
+\begin{itemize}
+    \item MSE (Mean Squared Error)
+    \item RMSE (Root MSE)
+    \item MAE (Mean Absolute Error)
+    \item SSE และ $SS_{total}$
+    \item $R^2$ (Coefficient of Determination)
+\end{itemize}
+\vspace{8cm}
+
+\textbf{5.3.2} (3 คะแนน) กำหนดให้ model มี parameter $\theta_0 = 1.0$, $\theta_1 = 0.5$ และ Learning Rate $\alpha = 0.1$\\
+gradient ที่คำนวณได้: $\frac{\partial L}{\partial \theta_0} = 2.0$, \quad $\frac{\partial L}{\partial \theta_1} = -1.5$\\
+จงคำนวณค่า $\theta_0$ และ $\theta_1$ ใหม่หลัง Gradient Descent update \textbf{1 ครั้ง}
+\vspace{3.5cm}
+
+\newpage
+
+\subsection*{ข้อ 5.4 — K-Means Clustering (5 คะแนน)}
+
+กำหนดจุดข้อมูล 2D ดังนี้: A(1,1), B(2,3), C(3,2), D(6,5), E(7,6), F(8,4)\\
+\textbf{Initial Centroids:} $\mu_1 = (1,1)$, $\mu_2 = (8,4)$
+
+\textbf{5.4.1} (3 คะแนน) ทำ K-Means Iteration ที่ 1:
+\begin{itemize}
+    \item คำนวณ Euclidean Distance ของแต่ละจุดไปยัง $\mu_1$ และ $\mu_2$
+    \item จัดกลุ่มแต่ละจุดเข้า cluster ที่ใกล้ที่สุด
+    \item คำนวณ centroid ใหม่
+\end{itemize}
+\vspace{5.5cm}
+
+\textbf{5.4.2} (2 คะแนน) ทำ Iteration ที่ 2 โดยใช้ centroid ใหม่จาก iteration ที่ 1 algorithm converge หรือยัง? อธิบาย
+\vspace{4cm}
+
+\newpage
+
+\subsection*{ข้อ 5.5 — Hierarchical Agglomerative Clustering + Dendrogram + Nested Clusters (12 คะแนน)}
+\textbf{ใช้ Complete Linkage:} $d(\{C_i\}, \{C_j\}) = \max_{x \in C_i,\, y \in C_j} d(x,y)$
+
+กำหนด Proximity Matrix ของจุดข้อมูล 5 จุด (A, B, C, D, E):
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|ccccc|}
+    \hline
+    \rowcolor{cyan!15}
+    & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\
+    \hline
+    \textbf{A} & 0 & 1 & 5 & 6 & 7 \\
+    \textbf{B} & 1 & 0 & 4 & 6 & 8 \\
+    \textbf{C} & 5 & 4 & 0 & 2 & 3 \\
+    \textbf{D} & 6 & 6 & 2 & 0 & 3 \\
+    \textbf{E} & 7 & 8 & 3 & 3 & 0 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{5.5.1} (5 คะแนน) แสดงขั้นตอน Agglomerative Clustering ทีละ step จนเหลือ 1 cluster:\\
+ระบุ: (1) คู่ที่ merge, (2) ระยะทางที่ merge, (3) Proximity Matrix ที่อัปเดตแล้ว ทุก iteration
+\vspace{8cm}
+
+\textbf{5.5.2} (4 คะแนน) วาด \textbf{Dendrogram} โดยระบุแกน Y เป็นระยะทาง (distance) และแสดงระดับที่ merge แต่ละครั้งให้ชัดเจน
+\vspace{7cm}
+
+\textbf{5.5.3} (2 คะแนน) วาด \textbf{Nested Cluster Diagram} แสดงการ group จุดข้อมูลในแต่ละ level
+\vspace{5cm}
+
+\textbf{5.5.4} (1 คะแนน) ถ้าตัด Dendrogram ที่ระดับ $d = 4$ จะได้กี่ cluster และประกอบด้วยจุดใดบ้าง?
+\vspace{1.5cm}
+
+\newpage
+
+% ─── ANSWER KEY ─────────────────────────────────────────────────────────────
+\section*{เฉลยและแนวคิด (Answer Key)}
+\textit{ส่วนนี้สำหรับตรวจหลังทำข้อสอบ แนะนำให้ทำข้อสอบเต็มเวลาก่อนเปิดเฉลย}
+
+\subsection*{Part 1: คำตอบ}
+
+\noindent\textbf{1.1 MCQ}
+\begin{multicols}{5}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \ans{b.}
+    \item \ans{a.}
+    \item \ans{b.}
+    \item \ans{b.}
+    \item \ans{a.}
+\end{enumerate}
+\end{multicols}
+
+\noindent\textbf{1.2 Multiple Selection}
+\begin{itemize}
+    \item \textbf{ข้อ 6:} \ans{a, c, d} (max\_depth, Learning Rate, n\_estimators คือ Hyperparameters; b,e คือ learned parameters)
+    \item \textbf{ข้อ 7:} \ans{a, b, d} (เพิ่มข้อมูล, ลด max\_depth, L1/L2 Reg ลด overfit; c เพิ่ม features อาจทำ overfit มากขึ้น; e เพิ่ม LR อาจทำให้ diverge)
+    \item \textbf{ข้อ 8:} \ans{a, b, c} (ช่วง -1 ถึง +1, ค่าใกล้ +1 ดี, ค่าลบ = misclustered; d ผิด ค่า 0 = on boundary; e ผิด Silhouette ใช้กับ clustering ทั่วไป)
+\end{itemize}
+
+\noindent\textbf{1.3 True/False}
+\begin{multicols}{4}
+\begin{enumerate}[label=\textbf{\arabic*.},start=9]
+    \item \ans{F} (Entropy=0 คือ pure)
+    \item \ans{T} (R² $<$ 0 ได้)
+    \item \ans{F} (แค่ local optima)
+    \item \ans{T} (Stratified รักษา class ratio)
+\end{enumerate}
+\end{multicols}
+
+\subsection*{Part 2: แนวคำตอบ (Definitions)}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Entropy:} วัดความไม่แน่นอน (impurity) ของ node ใน Decision Tree $H(S) = -\sum_{i} p_i \log_2 p_i$ ค่า 0 = pure (class เดียว), ค่า 1 = equally mixed สองคลาส
+    \item \textbf{Information Gain:} การลดลงของ Entropy หลังแบ่งข้อมูลด้วย attribute นั้น $IG(S,A) = H(S) - \sum_v \frac{|S_v|}{|S|}H(S_v)$ ยิ่งสูงยิ่งเป็น attribute ที่ดีสำหรับ split
+    \item \textbf{Confusion Matrix:} ตาราง 2×2 (หรือ n×n) แสดงผล classification ประกอบด้วย TP (ทำนายถูก-บวก), TN (ทำนายถูก-ลบ), FP (ทำนายผิด-positive), FN (ทำนายผิด-negative)
+    \item \textbf{Overfitting:} สภาวะที่ model เรียนรู้ noise ใน training data จน Training acc สูงมาก แต่ Test acc ต่ำ --- model ไม่สามารถ generalize กับข้อมูลใหม่ได้
+    \item \textbf{Gradient Descent:} Algorithm ปรับ parameter โดย update ในทิศทาง\textbf{ตรงข้าม} gradient ของ loss $\theta := \theta - \alpha \cdot \nabla_\theta L(\theta)$ เพื่อลด loss function ทีละขั้น
+    \item \textbf{Hyperparameter:} Parameter ที่\textbf{กำหนดก่อน training} และไม่ถูก optimize โดย model เช่น max\_depth, learning\_rate, k ใน KNN ต่างจาก learnable parameters ที่ model เรียนรู้ระหว่าง training
+    \item \textbf{k-Fold CV:} แบ่ง dataset เป็น k ส่วนเท่า ๆ กัน วนซ้ำ k รอบ โดยแต่ละรอบใช้ส่วนต่างกันเป็น validation set ที่เหลือเป็น training ค่า metric เฉลี่ยจาก k รอบ = ประสิทธิภาพของ model
+    \item \textbf{Centroid:} จุดศูนย์กลางของ cluster ใน K-Means คำนวณจากค่าเฉลี่ยของ feature ทุกมิติของจุดทั้งหมดใน cluster $\mu_k = \frac{1}{|C_k|}\sum_{x \in C_k} x$
+    \item \textbf{Silhouette Score:} วัดคุณภาพ clustering ช่วง $[-1, +1]$ โดย $s(i) = \frac{b(i)-a(i)}{\max(a(i),b(i))}$ โดย $a$=ระยะเฉลี่ยใน cluster, $b$=ระยะเฉลี่ยไปยัง cluster ใกล้ที่สุด ค่าสูงหมายถึง cluster ดี
+    \item \textbf{DBSCAN:} Algorithm clustering แบบ density-based กำหนด core points ด้วย $\varepsilon$ (รัศมี) และ MinPts (จำนวนจุดขั้นต่ำ) ไม่ต้องระบุ k ล่วงหน้า จัดการ noise ได้ และ cluster มีรูปร่างได้อิสระ
+\end{enumerate}
+
+\subsection*{Part 3: แนวคำตอบ}
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{Random Forest vs Decision Tree:} Random Forest ใช้ Bagging สร้าง Decision Trees หลายต้นจาก bootstrap samples ต่างกัน แต่ละต้น vote ผลลัพธ์ Ensemble หลายต้นลด variance ทำให้ model stable กว่า DT เดี่ยวที่ overfit ง่าย นอกจากนี้ Random Forest ยังสุ่มเลือก features แต่ละ split (feature subsampling) ลด correlation ระหว่างต้นไม้
+
+    \item \textbf{Overfitting:} Training 98\%, Test 62\% คือ Overfitting ชัดเจน Model จดจำ training data มากเกินไป วิธีแก้: (1) ลด max\_depth / เพิ่ม min\_samples\_split ใน DT (2) เพิ่ม L1/L2 Regularization (3) ใช้ k-Fold CV เพื่อ estimate performance จริง (4) เพิ่มข้อมูล training (5) Early Stopping
+
+    \item \textbf{CM Interpretation:} TP=20, FN=80 หมายความว่า Recall = 20/100 = 0.20 ต่ำมาก --- model ``พลาด'' ผู้ป่วยจริง 80\% ถือว่า\textbf{อันตรายมาก} ในบริบทการแพทย์ ควรปรับ decision threshold ให้ต่ำลง หรือ oversample class บวก (SMOTE) เพื่อให้ model ตรวจจับ positive case ได้ดีขึ้น
+
+    \item \textbf{Silhouette 0.12:} ค่า 0.12 ใกล้ 0 บ่งชี้ว่า cluster ทับซ้อนกัน หรือจุดข้อมูลอยู่บน boundary ระหว่าง cluster --- คุณภาพการ cluster\textbf{ต่ำมาก} วิธี diagnose: ใช้ Elbow Method (plot WCSS vs k) หรือ Silhouette Score vs k เพื่อหาค่า k ที่เหมาะสม
+
+    \item \textbf{Local Minimum:} เกิดเมื่อ gradient ลด loss ลงมาจนติดอยู่ที่จุดต่ำสุดเฉพาะที่ที่ไม่ใช่ global minimum gradient = 0 แต่ไม่ใช่คำตอบที่ดีที่สุด Adam optimizer แก้ปัญหาด้วยการรวม Momentum (สะสม gradient) และ Adaptive Learning Rate (ปรับ LR ตาม parameter) ทำให้ออกจาก local minimum และ saddle point ได้ดีกว่า SGD ธรรมดา
+\end{enumerate}
+
+\newpage
+\subsection*{Part 4: แนวคำตอบ}
+
+\subsubsection*{ข้อ 1: เปรียบเทียบ 4 Models}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabular}{|p{2.5cm}|p{3.8cm}|p{3.8cm}|p{3.5cm}|}
+    \hline
+    \rowcolor{cyan!15}
+    \textbf{Model} & \textbf{หลักการ} & \textbf{ข้อดี / ข้อจำกัด} & \textbf{FinTech Use Case} \\
+    \hline
+    Decision Tree & แบ่ง dataset ด้วย attribute ที่ให้ IG สูงสุด & ตีความง่าย / overfit ง่าย, ไม่ stable & ใช้ได้แต่ต้อง prune; อ่านผลง่าย \\
+    \hline
+    KNN & วัดระยะทางหา k เพื่อนบ้านแล้ว vote & ง่าย / ช้ามากกับ 50K samples; ไม่ดีกับ imbalanced & \textbf{ไม่เหมาะ} (dataset ใหญ่, class imbalance) \\
+    \hline
+    Naive Bayes & P(class|features) ด้วย Bayes + independence assumption & เร็ว / independence มักไม่จริง & ใช้ได้เบื้องต้น แต่ features อาจ correlate กัน \\
+    \hline
+    Random Forest & Ensemble DT หลายต้น + Bagging + Feature sampling & Robust, ลด overfit / ตีความยากกว่า & \textbf{เหมาะที่สุด}: จัดการ imbalance ได้ดี, ไม่ overfit, scale ได้ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{สรุป:} ควรเลือก \textbf{Random Forest} เนื่องจาก: (1) ทน imbalanced class ได้ดีกว่าเมื่อใช้ class\_weight (2) generalize ดีกว่า DT เดี่ยว (3) scale ได้กับ 50K samples (4) feature importance ช่วยตีความได้
+
+\subsubsection*{ข้อ 2: Cross-Validation Types}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabular}{|p{2.8cm}|p{3.2cm}|p{3.2cm}|p{3.0cm}|}
+    \hline
+    \rowcolor{cyan!15}
+    \textbf{ประเภท} & \textbf{Concept} & \textbf{ข้อดี / ข้อจำกัด} & \textbf{เหมาะกับ} \\
+    \hline
+    k-Fold & แบ่ง k ส่วน วน k รอบ & ประเมิน variance ดี / ใช้เวลา k เท่า & Dataset ทั่วไป balanced \\
+    \hline
+    Stratified k-Fold & k-Fold แต่รักษา class ratio ทุก fold & ดีกับ imbalanced / ใช้เวลาเท่า k-Fold & Class imbalanced \\
+    \hline
+    LOO-CV & k = n, test ทีละ 1 sample & ใช้ข้อมูลได้สูงสุด / ช้ามาก O(n) & Dataset เล็ก ($n < 100$) \\
+    \hline
+    Time Series CV & ขยาย training window ทีละ step & ไม่ data leakage จากอนาคต / ต้องเรียง & Time series, sequential data \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{ส่วน 2.2:} (a) Stock price $\rightarrow$ \textbf{Time Series CV} เพราะข้อมูลมี temporal dependency ห้ามสุ่ม\\
+(b) Cancer dataset imbalanced $\rightarrow$ \textbf{Stratified k-Fold} เพื่อรักษา class ratio ใน fold
+
+\newpage
+\subsection*{Part 5: เฉลยการคำนวณ}
+
+\subsubsection*{5.1 Entropy \& Information Gain}
+
+Dataset: 8 samples, 4 ใช่ (+), 4 ไม่ใช่ (-) $\Rightarrow$ $H(S) = -\frac{4}{8}\log_2\frac{4}{8} - \frac{4}{8}\log_2\frac{4}{8} = -\frac{1}{2}(-1) - \frac{1}{2}(-1) = \mathbf{1.0}$ bit
+
+\textbf{รายได้ (Income):}
+\begin{itemize}
+    \item สูง (High): rows 1,2,3 $\to$ 3 ใช่, 0 ไม่ใช่ $\Rightarrow H = 0$
+    \item ปานกลาง (Medium): rows 4,5 $\to$ 1 ใช่, 1 ไม่ใช่ $\Rightarrow H = 1.0$
+    \item ต่ำ (Low): rows 6,7,8 $\to$ 0 ใช่, 3 ไม่ใช่ $\Rightarrow H = 0$
+    \item $IG(\text{Income}) = 1.0 - \frac{3}{8}(0) - \frac{2}{8}(1.0) - \frac{3}{8}(0) = 1.0 - 0.25 = \mathbf{0.75}$
+\end{itemize}
+
+\textbf{นักศึกษา (Student):}
+\begin{itemize}
+    \item ใช่: rows 1,2,4,7 $\to$ 3 ใช่, 1 ไม่ใช่ $\Rightarrow H = -\frac{3}{4}\log_2\frac{3}{4} - \frac{1}{4}\log_2\frac{1}{4} = -\frac{3}{4}(1.585-2) - \frac{1}{4}(-2) = \frac{3}{4}(0.415) + 0.5 \approx 0.811$
+    \item ไม่ใช่: rows 3,5,6,8 $\to$ 1 ใช่, 3 ไม่ใช่ $\Rightarrow H = 0.811$ (symmetric)
+    \item $IG(\text{Student}) = 1.0 - \frac{4}{8}(0.811) - \frac{4}{8}(0.811) = 1.0 - 0.811 = \mathbf{0.189}$
+\end{itemize}
+
+\textbf{อายุ (Age):}
+\begin{itemize}
+    \item น้อยกว่า 30: rows 1,2,5,6 $\to$ 2 ใช่, 2 ไม่ใช่ $\Rightarrow H = 1.0$
+    \item 30--50: rows 3,4,7,8 $\to$ 2 ใช่, 2 ไม่ใช่ $\Rightarrow H = 1.0$
+    \item $IG(\text{Age}) = 1.0 - \frac{4}{8}(1.0) - \frac{4}{8}(1.0) = \mathbf{0.0}$
+\end{itemize}
+
+\textbf{สรุป IG:} Income = 0.75 $>$ Student = 0.189 $>$ Age = 0.0\\
+\textbf{Root Node = รายได้ (Income)} เพราะให้ Information Gain สูงสุด
+
+\subsubsection*{5.2 Confusion Matrix}
+
+TP=60, FP=40, FN=20, TN=80, Total=200
+\[
+\text{Accuracy} = \frac{60+80}{200} = \frac{140}{200} = \mathbf{0.70}
+\]
+\[
+\text{Precision} = \frac{60}{60+40} = \frac{60}{100} = \mathbf{0.60}
+\]
+\[
+\text{Recall} = \frac{60}{60+20} = \frac{60}{80} = \mathbf{0.75}
+\]
+\[
+\text{Specificity} = \frac{80}{80+40} = \frac{80}{120} \approx \mathbf{0.667}
+\]
+\[
+\text{F1} = \frac{2 \times 0.60 \times 0.75}{0.60 + 0.75} = \frac{0.90}{1.35} = \frac{2}{3} \approx \mathbf{0.667}
+\]
+
+\textbf{ตีความ:} Recall = 0.75 หมายถึงผู้ป่วยจริง 25\% ถูกพลาด (FN=20) ในบริบทการแพทย์ FN อันตรายกว่า FP เพราะผู้ป่วยไม่ได้รับการรักษา ควรลด threshold เพื่อเพิ่ม Recall แม้ Precision จะลดลงบ้าง
+
+\subsubsection*{5.3 Regression}
+
+errors $(e_i = y_{actual} - y_{pred})$: 0, 0, -1, 0, 1
+
+\[
+\text{MSE} = \frac{0^2+0^2+(-1)^2+0^2+1^2}{5} = \frac{2}{5} = \mathbf{0.40}, \quad
+\text{RMSE} = \sqrt{0.40} \approx \mathbf{0.632}
+\]
+\[
+\text{MAE} = \frac{0+0+1+0+1}{5} = \mathbf{0.40}
+\]
+\[
+\bar{y} = \frac{2+4+5+8+11}{5} = 6.0
+\quad
+\text{SSE} = \sum(y_i - \hat{y}_i)^2 = 0+0+1+0+1 = \mathbf{2}
+\]
+\[
+SS_{total} = (2-6)^2+(4-6)^2+(5-6)^2+(8-6)^2+(11-6)^2 = 16+4+1+4+25 = \mathbf{50}
+\]
+\[
+R^2 = 1 - \frac{SSE}{SS_{total}} = 1 - \frac{2}{50} = \mathbf{0.96}
+\]
+
+\textbf{Gradient Descent:}
+$\theta_0^{new} = 1.0 - 0.1 \times 2.0 = \mathbf{0.80}$,\quad
+$\theta_1^{new} = 0.5 - 0.1 \times (-1.5) = 0.5 + 0.15 = \mathbf{0.65}$
+
+\subsubsection*{5.4 K-Means}
+
+\textbf{Iteration 1} ($\mu_1=(1,1)$, $\mu_2=(8,4)$):
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    จุด & $d(\cdot, \mu_1)$ & $d(\cdot, \mu_2)$ & Cluster \\
+    \hline
+    A(1,1) & 0 & $\sqrt{58}\approx7.62$ & 1 \\
+    B(2,3) & $\sqrt{5}\approx2.24$ & $\sqrt{37}\approx6.08$ & 1 \\
+    C(3,2) & $\sqrt{5}\approx2.24$ & $\sqrt{29}\approx5.39$ & 1 \\
+    D(6,5) & $\sqrt{41}\approx6.40$ & $\sqrt{5}\approx2.24$ & 2 \\
+    E(7,6) & $\sqrt{61}\approx7.81$ & $\sqrt{5}\approx2.24$ & 2 \\
+    F(8,4) & $\sqrt{58}\approx7.62$ & 0 & 2 \\
+    \hline
+\end{tabular}
+\end{center}
+$\mu_1^{new} = \left(\frac{1+2+3}{3}, \frac{1+3+2}{3}\right) = (2, 2)$, \quad $\mu_2^{new} = \left(\frac{6+7+8}{3}, \frac{5+6+4}{3}\right) = (7, 5)$
+
+\textbf{Iteration 2} ($\mu_1=(2,2)$, $\mu_2=(7,5)$): ทุกจุดยังอยู่ใน cluster เดิม (A,B,C $\to$ Cluster 1; D,E,F $\to$ Cluster 2)\\
+Centroids ไม่เปลี่ยน $\Rightarrow$ \textbf{Converged!} ที่ Cluster 1 = \{A,B,C\}, Cluster 2 = \{D,E,F\}
+
+\subsubsection*{5.5 Hierarchical Agglomerative Clustering}
+
+\textbf{Step 1:} min = $d(A,B) = 1$ $\to$ Merge \{A,B\}\\
+Complete Linkage: $d(\{AB\},C)=\max(5,4)=5$, $\;d(\{AB\},D)=\max(6,6)=6$, $\;d(\{AB\},E)=\max(7,8)=8$
+
+\begin{center}
+\small
+\begin{tabular}{|c|cccc|}
+    \hline \rowcolor{cyan!15}
+    & \{AB\} & C & D & E \\ \hline
+    \{AB\} & 0 & 5 & 6 & 8 \\
+    C & 5 & 0 & 2 & 3 \\
+    D & 6 & 2 & 0 & 3 \\
+    E & 8 & 3 & 3 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Step 2:} min = $d(C,D) = 2$ $\to$ Merge \{C,D\}\\
+$d(\{AB\},\{CD\})=\max(5,6)=6$, $d(\{CD\},E)=\max(3,3)=3$
+
+\begin{center}
+\small
+\begin{tabular}{|c|ccc|}
+    \hline \rowcolor{cyan!15}
+    & \{AB\} & \{CD\} & E \\ \hline
+    \{AB\} & 0 & 6 & 8 \\
+    \{CD\} & 6 & 0 & 3 \\
+    E & 8 & 3 & 0 \\ \hline
+\end{tabular}
+\end{center}
+
+\textbf{Step 3:} min = $d(\{CD\},E) = 3$ $\to$ Merge \{C,D,E\}\\
+$d(\{AB\},\{CDE\}) = \max(6,8) = 8$
+
+\textbf{Step 4:} Merge \{AB\} + \{CDE\} ที่ $d = 8$
+
+\vspace{0.3cm}
+\textbf{Dendrogram (เฉลย):}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.75]
+    \draw[->] (0,-0.5) -- (0,9.5) node[above,font=\small] {ระยะทาง};
+    \foreach \y in {1,2,3,4,5,6,7,8} {
+        \draw (-0.1,\y) -- (0.1,\y);
+        \node[left,font=\scriptsize] at (-0.15,\y) {\y};
+    }
+    \node[below,font=\scriptsize] at (1,0) {A};
+    \node[below,font=\scriptsize] at (2,0) {B};
+    \node[below,font=\scriptsize] at (4,0) {C};
+    \node[below,font=\scriptsize] at (5,0) {D};
+    \node[below,font=\scriptsize] at (6.5,0) {E};
+    % A+B at d=1
+    \draw (1,0) -- (1,1); \draw (2,0) -- (2,1);
+    \draw[thick,blue] (1,1) -- (2,1);
+    % C+D at d=2
+    \draw (4,0) -- (4,2); \draw (5,0) -- (5,2);
+    \draw[thick,teal] (4,2) -- (5,2);
+    % {CD}+E at d=3
+    \draw (4.5,2) -- (4.5,3); \draw (6.5,0) -- (6.5,3);
+    \draw[thick,orange] (4.5,3) -- (6.5,3);
+    % {AB}+{CDE} at d=8
+    \draw (1.5,1) -- (1.5,8); \draw (5.5,3) -- (5.5,8);
+    \draw[thick,red] (1.5,8) -- (5.5,8);
+    % Labels
+    \node[right,font=\scriptsize,blue] at (2,1.1) {d=1};
+    \node[right,font=\scriptsize,teal] at (5,2.1) {d=2};
+    \node[right,font=\scriptsize,orange] at (6.5,3.1) {d=3};
+    \node[right,font=\scriptsize,red] at (5.5,8.1) {d=8};
+\end{tikzpicture}
+\end{center}
+
+\textbf{Nested Cluster Diagram (เฉลย):}
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+    \node[circle,fill=darkblue,inner sep=3pt,label=below:A] (A) at (0,0) {};
+    \node[circle,fill=darkblue,inner sep=3pt,label=below:B] (B) at (1.5,0) {};
+    \node[circle,fill=darkblue,inner sep=3pt,label=below:C] (C) at (4,0) {};
+    \node[circle,fill=darkblue,inner sep=3pt,label=below:D] (D) at (5.5,0) {};
+    \node[circle,fill=darkblue,inner sep=3pt,label=below:E] (E) at (7,1.2) {};
+    % {A,B}
+    \draw[dashed,blue,thick,rounded corners] (-0.5,-0.6) rectangle (2,0.7);
+    \node[blue,font=\scriptsize] at (0.75,1.0) {\{A,B\}};
+    % {C,D}
+    \draw[dashed,teal,thick,rounded corners] (3.5,-0.6) rectangle (6,0.7);
+    \node[teal,font=\scriptsize] at (4.75,1.0) {\{C,D\}};
+    % {C,D,E}
+    \draw[dashed,orange,thick,rounded corners] (3.2,-0.9) rectangle (7.6,1.9);
+    \node[orange,font=\scriptsize] at (5.4,2.2) {\{C,D,E\}};
+    % {A,B,C,D,E}
+    \draw[dashed,red,thick,rounded corners] (-0.8,-1.2) rectangle (8.0,2.7);
+    \node[red,font=\scriptsize] at (3.5,3.0) {\{A,B,C,D,E\}};
+\end{tikzpicture}
+\end{center}
+
+\textbf{5.5.4:} ตัดที่ $d=4$ จะได้ \textbf{2 clusters}: \{A,B\} และ \{C,D,E\}\\
+(เพราะ \{A,B\} merge กันที่ $d=1<4$ และ \{C,D,E\} merge กันครบที่ $d=3<4$ แต่ merge กัน 2 กลุ่มใหญ่ที่ $d=8>4$)
+
+\newpage
+
+% ─── FORMULA SHEET ───────────────────────────────────────────────────────────
+\section*{Formula Sheet (สูตรสำหรับใช้ในห้องสอบ)}
+\textit{อาจารย์จะแจก Formula Sheet แผ่นนี้ในห้องสอบ — ไม่ต้องท่องสูตร แต่ต้องเข้าใจวิธีใช้}
+
+\subsection*{Lecture 6: Classification}
+\begin{multicols}{2}
+\[
+H(S) = -\sum_{i=1}^{c} p_i \log_2 p_i
+\]
+\[
+IG(S,A) = H(S) - \sum_{v \in \text{Values}(A)} \frac{|S_v|}{|S|} H(S_v)
+\]
+\[
+\text{Gini}(S) = 1 - \sum_{i=1}^{c} p_i^2
+\]
+\[
+\text{Sigmoid}(z) = \frac{1}{1+e^{-z}}
+\]
+\columnbreak
+\[
+\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}
+\]
+\[
+\text{Precision} = \frac{TP}{TP+FP}, \quad \text{Recall} = \frac{TP}{TP+FN}
+\]
+\[
+\text{F1} = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision}+\text{Recall}}
+\]
+\[
+\text{Specificity} = \frac{TN}{TN+FP}
+\]
+\end{multicols}
+
+\subsection*{Lecture 7: Regression}
+\begin{multicols}{2}
+\[
+\text{MSE} = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+\]
+\[
+\text{RMSE} = \sqrt{\text{MSE}}, \quad \text{MAE} = \frac{1}{n}\sum|y_i - \hat{y}_i|
+\]
+\[
+R^2 = 1 - \frac{SSE}{SS_{total}} = 1 - \frac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}
+\]
+\columnbreak
+\[
+\theta_j := \theta_j - \alpha \cdot \frac{\partial L}{\partial \theta_j}
+\]
+\[
+L_{\text{Ridge}} = L + \lambda\sum\theta_j^2
+\]
+\[
+L_{\text{Lasso}} = L + \lambda\sum|\theta_j|
+\]
+\end{multicols}
+
+\subsection*{Lecture 9: Clustering}
+\begin{multicols}{2}
+\[
+d_{\text{Euclidean}} = \sqrt{\sum_{k}(x_k - y_k)^2}
+\]
+\[
+d_{\text{Manhattan}} = \sum_{k}|x_k - y_k|
+\]
+\[
+\text{WCSS} = \sum_{k=1}^{K}\sum_{x \in C_k} \|x - \mu_k\|^2
+\]
+\columnbreak
+\[
+s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}
+\]
+\[
+d_{\text{Complete}}(C_i, C_j) = \max_{x \in C_i, y \in C_j} d(x,y)
+\]
+\[
+d_{\text{Single}}(C_i, C_j) = \min_{x \in C_i, y \in C_j} d(x,y)
+\]
+\end{multicols}
+
+\newpage
+
+% ─── RECAP ───────────────────────────────────────────────────────────────────
+\section*{RECAP: สรุปเนื้อหาจำสอบ (อ่านก่อนสอบ)}
+
+\subsection*{RECAP 1: Classification (Lecture 6)}
+\begin{itemize}
+    \item \textbf{Decision Tree:} เลือก root ด้วย IG สูงสุด, Entropy=0 คือ pure node, Gini ใช้แทน Entropy ได้
+    \item \textbf{KNN:} หา k เพื่อนบ้านใกล้สุด, ช้าตอน predict, ไม่มี training phase, ต้อง scale features
+    \item \textbf{Naive Bayes:} สมมติ features อิสระกัน ทำงานเร็วมาก เหมาะกับ text classification
+    \item \textbf{Random Forest = Bagging + Feature Subsampling} ลด variance ดีกว่า DT เดี่ยว feature importance ช่วยตีความ
+    \item \textbf{Confusion Matrix จำ:} TP=ทำนายถูก-บวก, FP=ทำนายผิด-บวก (False Alarm), FN=พลาด positive (Missed)
+    \item ในทางการแพทย์ FN อันตรายกว่า FP $\Rightarrow$ เน้น Recall; ในการกรอง spam เน้น Precision
+\end{itemize}
+
+\subsection*{RECAP 2: Regression (Lecture 7)}
+\begin{itemize}
+    \item \textbf{MSE ลงโทษ outlier มากกว่า MAE} เพราะยกกำลังสอง; RMSE หน่วยเดียวกับ y
+    \item \textbf{$R^2 = 1$} = perfect fit; $R^2 = 0$ = ไม่ดีกว่าการใช้ค่าเฉลี่ย; $R^2 < 0$ = แย่กว่า
+    \item \textbf{Gradient Descent:} $\theta := \theta - \alpha \cdot \nabla L$ อัปเดต parameter ลดทาง gradient
+    \item \textbf{Batch GD:} ใช้ทุก sample/step (stable แต่ช้า) vs \textbf{SGD:} 1 sample/step (เร็วแต่ noisy) vs \textbf{Mini-batch:} กลาง ๆ
+    \item \textbf{Ridge (L2):} ลด magnitude weights, \textbf{Lasso (L1):} ทำให้บาง weight = 0 (feature selection)
+\end{itemize}
+
+\subsection*{RECAP 3: Parameter Tuning (Lecture 8)}
+\begin{itemize}
+    \item \textbf{Hyperparameter vs Learnable:} max\_depth, LR = Hyperparameter (กำหนดก่อน); weights, bias = Learnable (model เรียนรู้)
+    \item \textbf{Overfitting:} Train high, Test low $\Rightarrow$ แก้ด้วย: regularization, ลด complexity, เพิ่มข้อมูล, k-Fold CV
+    \item \textbf{k-Fold:} ทั่วไป; \textbf{Stratified k-Fold:} imbalanced class; \textbf{LOO-CV:} dataset เล็ก; \textbf{Time Series CV:} sequential
+    \item \textbf{Grid Search:} ลอง combination ทั้งหมด (exhaustive แต่ช้า); \textbf{Random Search:} สุ่ม (เร็วกว่า); \textbf{Bayesian:} ใช้ prior ชี้นำ
+    \item \textbf{Adam:} รวม Momentum + Adaptive LR ใช้ได้ดีกับส่วนใหญ่ ออกจาก local minimum ได้ดี
+    \item \textbf{Learning Rate Scheduling:} ลด LR ตามเวลา (decay) ช่วย converge ได้ละเอียดขึ้น
+\end{itemize}
+
+\subsection*{RECAP 4: Clustering (Lecture 9)}
+\begin{itemize}
+    \item \textbf{K-Means:} (1) init centroids, (2) assign points, (3) update centroids, (4) repeat จน converge WCSS วัดความแน่น
+    \item \textbf{Elbow Method:} plot WCSS vs k หา ``ข้อศอก'' ที่ WCSS ลดช้าลงกะทันหัน
+    \item \textbf{Silhouette:} $[-1,+1]$; $s \approx 1$ = ดี; $s \approx 0$ = on boundary; $s < 0$ = misclustered
+    \item \textbf{Hierarchical Agglomerative:} Bottom-up, Single/Complete/Average Linkage, ผล = Dendrogram ตัด Dendrogram ที่ระดับต่าง ๆ ได้จำนวน cluster ต่าง ๆ
+    \item \textbf{Complete Linkage = MAX distance} ระหว่างคู่จุดของ 2 clusters; Single = MIN
+    \item \textbf{DBSCAN:} ไม่ต้องกำหนด k, จัดการ noise ได้, cluster ไม่เป็น convex ได้ $\varepsilon$ = รัศมี, MinPts = จุดขั้นต่ำ
+    \item \textbf{K-Means ดีเมื่อ:} cluster กลม ๆ, รู้จำนวน k; \textbf{DBSCAN ดีเมื่อ:} cluster รูปร่างซับซ้อน, มี noise/outlier
+\end{itemize}
+
+\end{document}

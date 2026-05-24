@@ -1,0 +1,1190 @@
+\documentclass[a4paper,12pt]{article}
+
+% แพ็กเกจสำหรับภาษาไทยและการจัดการเอกสาร
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, calc}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+\usepackage{needspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multicol}
+\usepackage{array}
+
+% ตั้งค่าฟอนต์ภาษาไทย (ต้องมีฟอนต์ TH Sarabun New)
+\setmainfont{TH Sarabun New}
+\setmonofont{Courier New}
+
+% ตั้งค่าการตัดคำภาษาไทย เพื่อป้องกันตัวหนังสือตกขอบกระดาษ
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\linespread{1.15}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    escapeinside={(*@}{@*)}
+}
+\lstset{style=mystyle, language=SQL}
+
+\newcommand{\blank}[1]{\fbox{\rule{0pt}{1.1em}\hspace{#1}}}
+\newcommand{\ans}[1]{\textbf{#1}}
+\newcommand{\schema}[1]{\texttt{#1}}
+\tikzset{
+    fdcell/.style={draw, rectangle, minimum height=0.72cm, minimum width=1.75cm, align=center, font=\scriptsize, inner sep=2pt},
+    fdcellwide/.style={draw, rectangle, minimum height=0.72cm, minimum width=2.2cm, align=center, font=\scriptsize, inner sep=2pt},
+    fdarrow/.style={-latex, thick},
+    fdarrowdash/.style={-latex, thick, dashed},
+    fdnote/.style={font=\scriptsize, fill=white, inner sep=1pt}
+}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Large CPE 241 Database Systems (Module 3)}\\
+    \textbf{Mock Final Exam (ข้อสอบจำลองปลายภาค)}\\
+    \vspace{0.2cm}
+    เวลาสอบ: 2 ชั่วโมง (13.00--15.00)\\
+    คะแนนเต็ม 70 คะแนน
+\end{center}
+\hrule
+\vspace{0.35cm}
+
+\noindent\textbf{ประกาศและขอบเขตข้อสอบ}\\
+ข้อสอบฉบับนี้ออกแบบให้ครอบคลุม Lecture ทั้งหมด โดยเน้น Lecture 9--12 ได้แก่ Query Optimization, Multiuser Environment, NoSQL/MongoDB และ Advanced Topics รวมถึง SQL, Relational Algebra (RA), Tuple Relational Calculus (TRC), Domain Relational Calculus (DRC) และ Normalization\\
+\textbf{สิ่งที่อนุญาตให้นำเข้าห้องสอบ:} เครื่องเขียนและบัตรนักศึกษาเท่านั้น เว้นแต่อาจารย์ผู้คุมสอบประกาศเพิ่มเติม\\
+\textbf{ลักษณะข้อสอบ:} Part 1 Multiple Choice 40 ข้อ, Part 2 Short Answer 10 ข้อ, Part 3 แสดงวิธีทำ 3 ข้อ
+
+\vspace{0.5cm}
+
+\section*{Part 1: Multiple Choice Questions (40 Marks)}
+\textbf{คำชี้แจง:} เลือกคำตอบที่ถูกต้องที่สุด (ข้อละ 1 คะแนน)
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \needspace{6\baselineskip}
+    \item ข้อใดอธิบายลักษณะของ Relational Calculus ได้ถูกต้องที่สุด?
+    \begin{enumerate}[label=\alph*.]
+        \item เป็นภาษาแบบ Procedural ที่ต้องระบุลำดับการ Join ทุกขั้น
+        \item เป็นภาษาแบบ Non-procedural ที่ระบุว่าต้องการข้อมูลใดโดยไม่ระบุวิธีดึงข้อมูล
+        \item ใช้ได้เฉพาะกับฐานข้อมูล NoSQL เท่านั้น
+        \item ใช้เพื่อสร้าง Index โดยตรงใน DBMS
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ความแตกต่างหลักระหว่าง TRC และ DRC คือข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item TRC ใช้ตัวแปรแทนทั้ง tuple ส่วน DRC ใช้ตัวแปรแทนค่าใน domain หรือ column
+        \item TRC เป็นภาษา SQL ส่วน DRC เป็นภาษา JavaScript
+        \item TRC ใช้ได้เฉพาะกับ JOIN ส่วน DRC ใช้ได้เฉพาะกับ GROUP BY
+        \item TRC เป็น physical plan ส่วน DRC เป็น logical plan
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Relational Algebra จัดเป็นภาษาประเภทใด และเหตุผลคืออะไร?
+    \begin{enumerate}[label=\alph*.]
+        \item Non-procedural เพราะระบุเฉพาะผลลัพธ์ที่ต้องการ
+        \item Procedural เพราะระบุขั้นตอนการดำเนินการกับ relation เช่น selection, projection, join
+        \item Declarative เพราะไม่เกี่ยวข้องกับ execution plan
+        \item Schema-less เพราะไม่ต้องรู้โครงสร้าง relation
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ลำดับ Query Execution Process ที่ถูกต้องที่สุดคือข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Optimization $\rightarrow$ Parsing $\rightarrow$ Execution $\rightarrow$ Binding $\rightarrow$ Result
+        \item Parsing $\rightarrow$ Binding $\rightarrow$ Optimization $\rightarrow$ Execution $\rightarrow$ Result Output
+        \item Binding $\rightarrow$ Execution $\rightarrow$ Parsing $\rightarrow$ Result Output $\rightarrow$ Optimization
+        \item Execution $\rightarrow$ Parsing $\rightarrow$ Optimization $\rightarrow$ Binding $\rightarrow$ Result
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Query Execution Plan โดยทั่วไปไม่รวมข้อมูลประเภทใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Access method เช่น Full Table Scan, Index Scan, Index Seek
+        \item Join strategy เช่น Nested Loop Join, Hash Join, Merge Join
+        \item Cost estimation ของแต่ละ operation
+        \item รหัสผ่านของ user ที่รัน query
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item จากสมการด้านล่าง เป็นเทคนิค Query Optimization แบบใด?\\
+    \[
+    \pi_{\text{name},\text{grade}}(\sigma_{\text{grade}='A'}(\text{STUDENT}\bowtie\text{GRADE}))
+    \Rightarrow
+    \pi_{\text{name},\text{grade}}(\text{STUDENT}\bowtie\sigma_{\text{grade}='A'}(\text{GRADE}))
+    \]
+    \begin{enumerate}[label=\alph*.]
+        \item Predicate Pushdown
+        \item Projection Pushdown
+        \item Materialized View Rewrite
+        \item Hash Partitioning
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item หากตาราง \texttt{STUDENT} มี 120 columns แต่ query ต้องใช้เพียง \texttt{student\_id} และ \texttt{name} ก่อนนำไป Join เทคนิคใดควรใช้เพื่อลดข้อมูลเร็วขึ้น?
+    \begin{enumerate}[label=\alph*.]
+        \item Projection Pushdown
+        \item Dirty Read
+        \item Full Outer Join
+        \item Data Lakehouse
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ข้อใดอธิบายเหตุผลที่ควรใช้ \texttt{WHERE} แทน \texttt{HAVING} เมื่อเงื่อนไขนั้นไม่ต้องรอผล aggregate?
+    \begin{enumerate}[label=\alph*.]
+        \item \texttt{WHERE} กรองก่อน GROUP BY ทำให้จำนวนแถวที่ต้อง aggregate ลดลง
+        \item \texttt{WHERE} ทำงานหลัง \texttt{HAVING} เสมอ
+        \item \texttt{HAVING} ใช้กับ aggregate ไม่ได้
+        \item \texttt{WHERE} ทำให้ query เป็น NoSQL โดยอัตโนมัติ
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Index มี trade-off หลักอย่างไร?
+    \begin{enumerate}[label=\alph*.]
+        \item ช่วยให้ \texttt{SELECT} เร็วขึ้น แต่เพิ่มภาระ \texttt{INSERT}, \texttt{UPDATE}, \texttt{DELETE} และใช้พื้นที่เพิ่ม
+        \item ทำให้ทุก query กลายเป็น O(1) เสมอโดยไม่มีต้นทุน
+        \item ใช้แทน Primary Key ได้เสมอ
+        \item ทำให้ตารางเข้าสู่ 3NF โดยอัตโนมัติ
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Query ต่อไปนี้ควรได้ประโยชน์จาก Index ประเภทใดมากที่สุด?\\
+    \texttt{SELECT * FROM EMPLOYEE WHERE DeptID = 5 AND Salary > 50000;}
+    \begin{enumerate}[label=\alph*.]
+        \item Index บน \texttt{Name} เพียงอย่างเดียว
+        \item Composite index บน \texttt{(DeptID, Salary)}
+        \item Full-text index บน \texttt{Address}
+        \item Hash index บน \texttt{Photo}
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item หากต้อง Join ตาราง A 1,000 แถว, B 400,000 แถว และ C 500 แถว heuristic ที่เหมาะสมคือข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Join ตารางใหญ่ที่สุดก่อนเสมอ
+        \item Join ตารางเล็กก่อน เช่น A กับ C แล้วค่อย Join B
+        \item ห้ามใช้ Index กับ Join column
+        \item ใช้ Cartesian Product ก่อนทุกครั้ง
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ลูกค้ามีจำนวนแถวจำนวนมากและต้องกระจายข้อมูลตามช่วงตัวอักษรนามสกุล A--H, I--R, S--Z ควรใช้ partitioning แบบใดตามหลักการ?
+    \begin{enumerate}[label=\alph*.]
+        \item Vertical Partitioning
+        \item Horizontal Partitioning หรือ Range Sharding
+        \item Projection Pushdown
+        \item Full-text Indexing
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Vertical Partitioning หมายถึงข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item แบ่งตารางตามแถว เช่น ภูมิภาคหรือช่วงตัวอักษร
+        \item แบ่งตารางตาม columns เช่น personal info อยู่ server หนึ่ง และ transaction history อยู่อีก server หนึ่ง
+        \item สร้างสำเนาข้อมูลทั้งตารางไปทุก node
+        \item บังคับให้ทุก transaction เป็น Serializable
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Replication ใน Distributed Database มีประโยชน์หลักข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item ลดจำนวนตารางให้เหลือตารางเดียว
+        \item เพิ่ม reliability, availability และช่วยให้ระบบทนต่อ node failure ได้ดีขึ้น
+        \item ทำให้ไม่ต้องใช้ concurrency control
+        \item ทำให้ข้อมูลทั้งหมดกลายเป็น schema-less
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ในการโอนเงินจากบัญชี A ไป B หากระบบตัดเงินจาก A แล้วดับก่อนเพิ่มเงินให้ B คุณสมบัติ ACID ใดช่วยให้ธุรกรรมต้องสำเร็จทั้งหมดหรือยกเลิกทั้งหมด?
+    \begin{enumerate}[label=\alph*.]
+        \item Atomicity
+        \item Consistency
+        \item Isolation
+        \item Durability
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Dirty Read หมายถึงข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item อ่านข้อมูลที่ transaction อื่นยังไม่ commit และอาจ rollback ได้
+        \item อ่าน row เดิมสองครั้งแล้วค่าเปลี่ยนเพราะ transaction อื่น update แล้ว commit
+        \item query รอบที่สองมี row ใหม่เพิ่มเข้ามาตามเงื่อนไขเดิม
+        \item อ่านข้อมูลจาก Data Lake โดยไม่มี schema
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Isolation level ใดเป็นระดับต่ำสุดที่ป้องกัน Non-repeatable Read ได้ตามตาราง ANSI SQL ใน lecture?
+    \begin{enumerate}[label=\alph*.]
+        \item Read Uncommitted
+        \item Read Committed
+        \item Repeatable Read
+        \item Serializable
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Phantom Read ถูกป้องกันอย่างเข้มที่สุดด้วย isolation level ใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Read Uncommitted
+        \item Read Committed
+        \item Repeatable Read
+        \item Serializable
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item เมื่อ MySQL เปิด \texttt{autocommit = 1} โดย default ผลที่เกิดขึ้นคือข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item ทุก SQL statement ถูก commit ทันทีหลังรันสำเร็จ ทำให้ rollback ย้อน statement นั้นไม่ได้
+        \item ทุก transaction ถูก rollback อัตโนมัติหลัง SELECT
+        \item DBMS จะปิด Index ทั้งหมด
+        \item ห้ามใช้ \texttt{START TRANSACTION}
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item คำสั่ง \texttt{SAVEPOINT} ใช้ทำอะไร?
+    \begin{enumerate}[label=\alph*.]
+        \item สร้าง user ใหม่ในระบบ
+        \item ตั้งจุดภายใน transaction เพื่อให้ rollback กลับไปยังจุดนั้นได้
+        \item บังคับให้ view เป็น materialized view
+        \item สร้าง schema สำหรับ MongoDB
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item \texttt{SELECT ... FOR UPDATE} ภายใน transaction มีผลหลักอย่างไร?
+    \begin{enumerate}[label=\alph*.]
+        \item อ่านข้อมูลโดยไม่ lock row ใด ๆ
+        \item lock row ที่เลือกไว้เพื่อกัน transaction อื่นมา update จนกว่า commit หรือ rollback
+        \item สร้าง trigger หลังอ่านข้อมูล
+        \item แปลง query ให้เป็น DRC
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Trigger แบบ \texttt{BEFORE INSERT} เหมาะกับงานใดมากที่สุด?
+    \begin{enumerate}[label=\alph*.]
+        \item Validation หรือปรับค่า \texttt{NEW} ก่อน row ถูก insert จริง
+        \item สร้าง backup ของทั้ง database หลัง commit
+        \item ปิด isolation level
+        \item ทำ schema-on-read
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ข้อใดเป็นข้อจำกัดของ Trigger ใน MySQL ตาม lecture?
+    \begin{enumerate}[label=\alph*.]
+        \item MySQL รองรับเฉพาะ row-level trigger ไม่รองรับ statement-level trigger
+        \item Trigger ต้องเขียนด้วย Python เท่านั้น
+        \item Trigger สามารถเรียก \texttt{COMMIT} และ \texttt{ROLLBACK} ได้เสมอ
+        \item ตารางหนึ่งต้องมี trigger อย่างน้อย 5 ตัว
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Assertion ต่างจาก Check Constraint อย่างไรในภาพรวม?
+    \begin{enumerate}[label=\alph*.]
+        \item Assertion สามารถนิยามเงื่อนไขข้ามหลายตารางได้ แต่หลาย DBMS ไม่รองรับโดยตรง
+        \item Check Constraint ใช้ได้เฉพาะกับ MongoDB
+        \item Assertion ใช้เพื่อสร้าง user account เท่านั้น
+        \item ทั้งสองอย่างคือคำสั่งเดียวกันทุกประการ
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ต้องการให้ user \texttt{student} อ่านและเพิ่มข้อมูลในตาราง \texttt{mydb.employee} ได้ ควรใช้คำสั่งใด?
+    \begin{enumerate}[label=\alph*.]
+        \item \texttt{GRANT SELECT, INSERT ON mydb.employee}\\
+        \texttt{TO 'student'@'localhost';}
+        \item \texttt{REVOKE SELECT, INSERT ON mydb.employee}\\
+        \texttt{FROM 'student'@'localhost';}
+        \item \texttt{DROP USER 'student'@'localhost';}
+        \item \texttt{ROLLBACK TO student;}
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item View ใน SQL คืออะไร?
+    \begin{enumerate}[label=\alph*.]
+        \item Virtual table จากผลลัพธ์ query ซึ่งโดยทั่วไปไม่เก็บข้อมูลเอง
+        \item Physical table ที่มีข้อมูลซ้ำเต็มชุดเสมอ
+        \item Index ชนิดหนึ่งที่ใช้แทน Primary Key
+        \item Isolation level แบบหนึ่ง
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item เงื่อนไขใดทำให้ View มีโอกาสเป็น updatable view ใน MySQL มากที่สุด?
+    \begin{enumerate}[label=\alph*.]
+        \item View อิงจากตารางเดียว และไม่มี \texttt{DISTINCT}, \texttt{GROUP BY}, aggregate หรือ join ซับซ้อน
+        \item View ต้องมี \texttt{UNION} อย่างน้อยหนึ่งครั้ง
+        \item View ต้องซ่อน Primary Key ทุกครั้ง
+        \item View ต้อง Join อย่างน้อยสามตาราง
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item NoSQL หมายถึงอะไรในบริบทของ lecture?
+    \begin{enumerate}[label=\alph*.]
+        \item Not Only SQL เป็นกลุ่มฐานข้อมูล non-relational ที่เหมาะกับงานบางประเภท
+        \item No Security Query Language
+        \item ฐานข้อมูลที่ห้ามใช้ JSON
+        \item ระบบสำรองข้อมูลของ RDBMS เท่านั้น
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ลำดับโครงสร้างของ MongoDB จากใหญ่ไปเล็กคือข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Database $\rightarrow$ Collection $\rightarrow$ Document $\rightarrow$ Field
+        \item Field $\rightarrow$ Document $\rightarrow$ Database $\rightarrow$ Collection
+        \item Table $\rightarrow$ Row $\rightarrow$ Column $\rightarrow$ Index
+        \item Node $\rightarrow$ Edge $\rightarrow$ Graph $\rightarrow$ Database
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item MongoDB Document มีลักษณะตรงกับข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Stored in BSON, รองรับ nested object, array และ field ที่ยืดหยุ่น
+        \item ต้องมี schema เดียวกันทุก document แบบเข้มงวดเหมือน table ใน SQL
+        \item เก็บข้อมูลได้เฉพาะ string เท่านั้น
+        \item ห้ามมีค่า null และ Date
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item NoSQL แบบ Key-Value เหมาะกับงานใดมากที่สุด?
+    \begin{enumerate}[label=\alph*.]
+        \item Caching, session storage และ real-time counters
+        \item ออกแบบ ERD แบบ normalized ถึง BCNF
+        \item แปลง TRC เป็น DRC
+        \item สร้าง OLAP cube ที่มี schema ตายตัว
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Graph Database เช่น Neo4j เหมาะกับโจทย์ใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Social network และ recommendation ที่เน้นความสัมพันธ์ระหว่าง entities
+        \item Transaction bank transfer ที่ต้อง normalized สูงเท่านั้น
+        \item เก็บไฟล์ raw image โดยไม่วิเคราะห์
+        \item สร้าง trigger ใน MySQL
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Mongoose ใน Node.js มีบทบาทอะไรกับ MongoDB?
+    \begin{enumerate}[label=\alph*.]
+        \item เป็น ODM ที่ช่วย model schema, validation, CRUD และ query building
+        \item เป็น isolation level ของ MySQL
+        \item เป็นชนิดของ Index ใน Relational DB
+        \item เป็นคำสั่ง SQL สำหรับสร้าง view
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ข้อใดเป็น JSON ที่ถูกต้องตามกฎพื้นฐาน?
+    \begin{enumerate}[label=\alph*.]
+        \item \texttt{\{ "name": "Alice", "age": 21, "isStudent": true \}}
+        \item \texttt{\{ 'name': 'Alice', age: 21, \}}
+        \item \texttt{\{ name = "Alice"; age = 21 \}}
+        \item \texttt{[name: Alice, age: 21]}
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ข้อใดจับคู่ OLTP และ OLAP ได้ถูกต้องที่สุด?
+    \begin{enumerate}[label=\alph*.]
+        \item OLTP: short frequent transactions; OLAP: complex analytical read-heavy queries
+        \item OLTP: historical cube only; OLAP: bank transfer real-time only
+        \item OLTP: schema-on-read; OLAP: no aggregation
+        \item OLTP และ OLAP เหมือนกันทุกด้าน
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Data Warehouse มีลักษณะเด่นข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Structured, cleaned, historical data ผ่าน ETL และ schema-on-write เพื่อ analytical queries
+        \item Raw unprocessed data ทุกชนิดโดยไม่กำหนด schema จนกว่าจะอ่าน
+        \item ใช้แทน transaction database เพื่อทำ bank transfer real-time
+        \item ห้ามเก็บข้อมูลย้อนหลัง
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Data Lake แตกต่างจาก Data Warehouse อย่างไร?
+    \begin{enumerate}[label=\alph*.]
+        \item Data Lake เก็บ raw/unprocessed data และใช้ schema-on-read ส่วน Data Warehouse เก็บข้อมูลที่จัดโครงสร้างและทำความสะอาดแล้ว
+        \item Data Lake ใช้ได้เฉพาะกับ OLTP เท่านั้น
+        \item Data Warehouse ไม่มี schema
+        \item ทั้งสองอย่างใช้กับข้อมูลชนิดเดียวกันและไม่มีความต่าง
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item บริษัทเก็บ log clickstream, รูปภาพ, JSON event และไฟล์ raw จำนวนมากไว้ก่อน โดยยังไม่รู้ว่าจะวิเคราะห์อะไรในอนาคต ควรเลือกอะไรเหมาะสุด?
+    \begin{enumerate}[label=\alph*.]
+        \item Transaction Database
+        \item Data Warehouse
+        \item Data Lake
+        \item Updatable View
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item ใน Distributed Database เมื่อเกิด network failure มักต้องพิจารณา trade-off ใด?
+    \begin{enumerate}[label=\alph*.]
+        \item Consistency, Availability และ Partition Tolerance
+        \item Projection, Selection และ Rename
+        \item Atomicity, Indexing และ Mongoose
+        \item JSON, BSON และ XML
+    \end{enumerate}
+
+    \needspace{6\baselineskip}
+    \item Elasticity ใน Cloud Computing หมายถึงข้อใด?
+    \begin{enumerate}[label=\alph*.]
+        \item ความสามารถในการเพิ่มหรือลด resource ตาม demand อัตโนมัติหรือรวดเร็ว
+        \item การทำให้ข้อมูลทุกตัวเป็น atomic value
+        \item การซ่อน column ด้วย view
+        \item การ rollback transaction ไปยัง savepoint
+    \end{enumerate}
+\end{enumerate}
+
+\newpage
+\section*{Part 2: Short Answer Questions (10 Marks)}
+\textbf{คำชี้แจง:} ตอบสั้น กระชับ และตรงประเด็น (ข้อละ 1 คะแนน)
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item อธิบายความต่างระหว่าง TRC และ DRC ในแง่ของตัวแปรที่ใช้ในนิพจน์ relational calculus
+    \vspace{1.3cm}
+
+    \item จาก query \texttt{SELECT * FROM STUDENT WHERE program='CPE';} จงบอกเหตุผล 1 ข้อว่าทำไม \texttt{SELECT *} อาจทำให้ performance แย่กว่าการเลือกเฉพาะ column ที่ใช้จริง
+    \vspace{1.3cm}
+
+    \item \texttt{Index Scan} กับ \texttt{Index Seek} ต่างกันอย่างไรในภาพรวม?
+    \vspace{1.3cm}
+
+    \item ใน transaction isolation จงยกตัวอย่างสั้น ๆ ของ Phantom Read
+    \vspace{1.3cm}
+
+    \item ถ้าต้องการ undo เฉพาะบางคำสั่งภายใน transaction โดยไม่ทิ้ง transaction ทั้งหมด ควรใช้คำสั่งใดร่วมกับ \texttt{ROLLBACK TO}?
+    \vspace{1.3cm}
+
+    \item Trigger แบบ \texttt{AFTER INSERT} เหมาะกับงานประเภท logging/auditing อย่างไร?
+    \vspace{1.3cm}
+
+    \item View ช่วยเรื่อง security ได้อย่างไร จงตอบด้วยตัวอย่างสั้น ๆ
+    \vspace{1.3cm}
+
+    \item เขียนลำดับชั้นของ MongoDB ตั้งแต่ Database ลงไปถึง Field
+    \vspace{1.3cm}
+
+    \item เลือกคำตอบระหว่าง Database, Data Warehouse, Data Lake: ระบบ dashboard ผู้บริหารที่วิเคราะห์ยอดขายย้อนหลังหลายปีจากข้อมูลที่ clean แล้วควรใช้อะไร?
+    \vspace{1.3cm}
+
+    \item ตาราง \texttt{ENROLLMENT(Sid, CourseId, Sname, CourseName, Grade)} มีคีย์ผสม \texttt{\{Sid, CourseId\}} และมี \texttt{Sid $\rightarrow$ Sname} กับ \texttt{CourseId $\rightarrow$ CourseName} ขัดกับ Normal Form ระดับใดเป็นหลัก?
+    \vspace{1.3cm}
+\end{enumerate}
+
+\newpage
+\section*{Part 3: Long Questions (20 Marks)}
+\textbf{คำชี้แจง:} แสดงวิธีทำให้ครบถ้วน ข้อ 1--2 ให้เติมช่องว่างของ SQL, RA, TRC และ DRC ให้สมบูรณ์ ส่วนข้อ 3 ให้ทำ Dependency/Normalization
+
+\subsection*{Question 1: Query Writing 4 Forms (7 Marks)}
+กำหนด schema ของระบบร้านค้าออนไลน์ดังนี้
+\begin{itemize}
+    \item \texttt{CUSTOMER(Cid, Cname, City, Tier)}
+    \item \texttt{ORDERS(Oid, Cid, OrderDate, Status)}
+    \item \texttt{ORDER\_ITEM(Oid, Pid, Qty, UnitPrice)}
+    \item \texttt{PRODUCT(Pid, Pname, Category, SupplierId)}
+    \item \texttt{SUPPLIER(SupplierId, Sname, Country)}
+\end{itemize}
+
+\noindent\textbf{โจทย์:} หาชื่อและ Tier ของลูกค้าที่อยู่เมือง \texttt{'Bangkok'} และเคยซื้อสินค้า Category = \texttt{'Storage'} จาก supplier ประเทศ \texttt{'Japan'} โดย order ต้องมี Status = \texttt{'PAID'}\\
+\textbf{หมายเหตุ:} ต้องคืนผลลัพธ์เป็น \texttt{Cname, Tier} เท่านั้น
+
+\vspace{0.2cm}
+\textbf{1.1 SQL (2 คะแนน)}
+\begin{lstlisting}[language=SQL]
+SELECT DISTINCT C.Cname, C.Tier
+FROM CUSTOMER C
+JOIN ORDERS O ON (*@\blank{3.0cm}@*)
+JOIN ORDER_ITEM I ON (*@\blank{3.0cm}@*)
+JOIN PRODUCT P ON (*@\blank{3.0cm}@*)
+JOIN SUPPLIER S ON (*@\blank{3.0cm}@*)
+WHERE C.City = 'Bangkok'
+  AND O.Status = 'PAID'
+  AND P.Category = 'Storage'
+  AND (*@\blank{3.0cm}@*);
+\end{lstlisting}
+
+\vspace{0.1cm}
+\textbf{1.2 Relational Algebra (2 คะแนน)}
+\[
+\begin{aligned}
+&\pi_{\text{Cname},\text{Tier}}\Big(
+  \sigma_{\blank{4.3cm}}\big(\\
+&\quad \text{CUSTOMER}
+  \bowtie_{\blank{1.8cm}}
+  \text{ORDERS}
+  \bowtie_{\blank{1.8cm}}
+  \text{ORDER\_ITEM}\\
+&\quad \bowtie_{\blank{1.8cm}}
+  \text{PRODUCT}
+  \bowtie_{\blank{1.8cm}}
+  \text{SUPPLIER}
+  \big)\Big)
+\end{aligned}
+\]
+
+\vspace{0.1cm}
+\textbf{1.3 TRC (1.5 คะแนน)}
+\[
+\begin{aligned}
+\{\, c.\text{Cname}, c.\text{Tier} \mid\;& c \in \text{CUSTOMER} \land c.\text{City}='Bangkok' \land\\
+&\exists o \in \text{ORDERS}\;
+\exists i \in \text{ORDER\_ITEM}\;
+\exists p \in \text{PRODUCT}\;
+\exists s \in \text{SUPPLIER}\\
+&(\blank{10.5cm}) \,\}
+\end{aligned}
+\]
+
+\vspace{0.1cm}
+\textbf{1.4 DRC (1.5 คะแนน)}
+\[
+\begin{aligned}
+\{\, cn,tier \mid\;& \exists cid,city,oid,odate,status,pid,qty,price,pn,cat,sid,sn,country\\
+&(\text{CUSTOMER}(cid,cn,city,tier) \land
+\text{ORDERS}(oid,cid,odate,status) \land\\
+&\text{ORDER\_ITEM}(oid,pid,qty,price) \land
+\text{PRODUCT}(pid,pn,cat,sid) \land\\
+&\text{SUPPLIER}(sid,sn,country) \land \blank{8.5cm}) \,\}
+\end{aligned}
+\]
+
+\newpage
+\subsection*{Question 2: Universal Query / Division (7 Marks)}
+กำหนด schema ของระบบลงทะเบียนเรียนดังนี้
+\begin{itemize}
+    \item \texttt{STUDENT(Sid, Sname, Major, Year)}
+    \item \texttt{COURSE(Cid, Cname, Track)}
+    \item \texttt{ENROLL(Sid, Cid, Grade)}
+\end{itemize}
+
+\noindent\textbf{โจทย์:} หารหัสและชื่อนักศึกษา Major = \texttt{'CPE'} ที่ลงครบทุกวิชาใน Track = \texttt{'Database'} และทุกวิชานั้นได้ Grade อยู่ใน \texttt{\{'A', 'B+', 'B'\}} หรือดีกว่าเทียบตามโจทย์นี้\\
+\textbf{หมายเหตุ:} ให้ถือว่า \texttt{'A'}, \texttt{'B+'}, \texttt{'B'} เป็นกลุ่มเกรดผ่านเงื่อนไข
+
+\vspace{0.2cm}
+\textbf{2.1 SQL แบบ \texttt{NOT EXISTS} ซ้อนกัน (2 คะแนน)}
+\begin{lstlisting}[language=SQL]
+SELECT S.Sid, S.Sname
+FROM STUDENT S
+WHERE S.Major = 'CPE'
+  AND NOT EXISTS (
+      SELECT 1
+      FROM COURSE C
+      WHERE C.Track = 'Database'
+        AND NOT EXISTS (
+            SELECT 1
+            FROM ENROLL E
+            WHERE (*@\blank{3.0cm}@*)
+              AND (*@\blank{3.0cm}@*)
+              AND (*@\blank{4.0cm}@*)
+        )
+  );
+\end{lstlisting}
+
+\vspace{0.1cm}
+\textbf{2.2 Relational Algebra แบบ Division (2 คะแนน)}
+\[
+\begin{aligned}
+DBCourse &= \pi_{\text{Cid}}(\sigma_{\text{Track}='Database'}(\text{COURSE}))\\
+GoodEnroll &= \pi_{\text{Sid},\text{Cid}}(\sigma_{\blank{3.8cm}}(\text{ENROLL}))\\
+GoodStudent &= \blank{5.2cm}\\
+\text{Answer} &= \pi_{\text{Sid},\text{Sname}}(\sigma_{\text{Major}='CPE'}(\text{STUDENT}) \bowtie_{\blank{2.2cm}} GoodStudent)
+\end{aligned}
+\]
+
+\vspace{0.1cm}
+\textbf{2.3 TRC (1.5 คะแนน)}
+\[
+\begin{aligned}
+\{\, s.\text{Sid},s.\text{Sname} \mid\;& s \in \text{STUDENT} \land s.\text{Major}='CPE' \land\\
+&\forall c \in \text{COURSE}\,
+(c.\text{Track}='Database' \Rightarrow\\
+&\quad \exists e \in \text{ENROLL}\,(\blank{9.5cm})) \,\}
+\end{aligned}
+\]
+
+\vspace{0.1cm}
+\textbf{2.4 DRC (1.5 คะแนน)}
+\[
+\begin{aligned}
+\{\, sid,sname \mid\;& \exists major,yr(
+\text{STUDENT}(sid,sname,major,yr) \land major='CPE' \land\\
+&\forall cid,cname,track(\text{COURSE}(cid,cname,track) \land track='Database' \Rightarrow\\
+&\quad \exists grade(\text{ENROLL}(sid,cid,grade) \land \blank{4.4cm}))) \,\}
+\end{aligned}
+\]
+
+\newpage
+\subsection*{Question 3: Functional Dependency and Normalization (6 Marks)}
+กำหนด relation สำหรับบันทึกงานโปรเจกต์ดังนี้
+\begin{center}
+\small\ttfamily
+\begin{tabular}{l}
+PROJECT\_ASSIGNMENT(EmpID, ProjectID, EmpName, DeptID, DeptName,\\
+\quad ProjectName, ClientID, ClientName,\\
+\quad ManagerID, ManagerName, Hours, SkillLevel)
+\end{tabular}
+\end{center}
+กำหนด Primary Key เป็น \texttt{\{EmpID, ProjectID\}} และมี Functional Dependencies:
+\begin{itemize}
+    \item \textbf{FD1:} \texttt{EmpID $\rightarrow$ EmpName, DeptID}
+    \item \textbf{FD2:} \texttt{DeptID $\rightarrow$ DeptName}
+    \item \textbf{FD3:} \texttt{ProjectID $\rightarrow$ ProjectName, ClientID, ManagerID}
+    \item \textbf{FD4:} \texttt{ClientID $\rightarrow$ ClientName}
+    \item \textbf{FD5:} \texttt{ManagerID $\rightarrow$ ManagerName}
+    \item \textbf{FD6:} \texttt{\{EmpID, ProjectID\} $\rightarrow$ Hours, SkillLevel}
+\end{itemize}
+
+\begin{enumerate}[label=\textbf{3.\arabic*}]
+    \item (1 คะแนน) Relation เดิมอยู่ใน Normal Form สูงสุดระดับใด และขัดกับกฎใดของระดับถัดไป? ให้ระบุ dependency ที่เป็นปัญหา
+    \vspace{2.5cm}
+
+    \item (2 คะแนน) แยก relation ให้ผ่าน 2NF โดยระบุ schema, Primary Key และ Foreign Key
+    \vspace{4.0cm}
+
+    \item (3 คะแนน) แยกต่อให้ผ่าน 3NF โดยระบุ schema สุดท้ายทั้งหมด, Primary Key และ Foreign Key พร้อมอธิบายว่าแก้ transitive dependency ตัวใดบ้าง
+    \vspace{5.0cm}
+\end{enumerate}
+
+\newpage
+\section*{เฉลยและแนวคิด (Answer Key)}
+\textit{ส่วนนี้สำหรับตรวจหลังทำข้อสอบ แนะนำให้ทำข้อสอบเต็มเวลาก่อนเปิดเฉลย}
+
+\subsection*{Part 1: Multiple Choice Questions}
+\begin{multicols}{2}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \ans{b.} Relational Calculus เป็น Non-procedural
+    \item \ans{a.} TRC ใช้ tuple variables, DRC ใช้ domain variables
+    \item \ans{b.} RA เป็น Procedural
+    \item \ans{b.} Parsing, Binding, Optimization, Execution, Result
+    \item \ans{d.} Query plan ไม่แสดง password
+    \item \ans{a.} Predicate Pushdown
+    \item \ans{a.} Projection Pushdown
+    \item \ans{a.} WHERE กรองก่อน aggregate
+    \item \ans{a.} Index ช่วยอ่านแต่มีต้นทุนเขียนและ storage
+    \item \ans{b.} Composite index บน \texttt{(DeptID, Salary)}
+    \item \ans{b.} Join ตารางเล็กก่อนตาม heuristic
+    \item \ans{b.} แบ่งตามแถวคือ Horizontal หรือ Range Sharding
+    \item \ans{b.} Vertical คือแบ่งตาม columns
+    \item \ans{b.} Replication ช่วย reliability และ fault tolerance
+    \item \ans{a.} Atomicity
+    \item \ans{a.} Dirty Read คืออ่านค่าที่ยังไม่ commit
+    \item \ans{c.} Repeatable Read
+    \item \ans{d.} Serializable
+    \item \ans{a.} Autocommit commit ทุก statement
+    \item \ans{b.} SAVEPOINT ตั้งจุด rollback ภายใน transaction
+    \item \ans{b.} SELECT FOR UPDATE lock row
+    \item \ans{a.} BEFORE INSERT ใช้ validate/modify ก่อน insert
+    \item \ans{a.} MySQL มี row-level trigger
+    \item \ans{a.} Assertion ใช้เงื่อนไขข้าม table ได้ แต่หลาย DBMS ไม่รองรับ
+    \item \ans{a.} GRANT SELECT, INSERT
+    \item \ans{a.} View เป็น virtual table
+    \item \ans{a.} Updatable view มักต้องอิง table เดียวและไม่ aggregate/join ซับซ้อน
+    \item \ans{a.} NoSQL = Not Only SQL
+    \item \ans{a.} Database, Collection, Document, Field
+    \item \ans{a.} MongoDB เก็บ BSON และ nested/array ได้
+    \item \ans{a.} Key-value เหมาะกับ caching/session
+    \item \ans{a.} Graph เหมาะกับ relationship-heavy use cases
+    \item \ans{a.} Mongoose เป็น ODM
+    \item \ans{a.} JSON ต้องใช้ double quotes และไม่มี trailing comma
+    \item \ans{a.} OLTP transaction สั้นถี่, OLAP analytical read-heavy
+    \item \ans{a.} Data Warehouse คือ structured historical analytical store
+    \item \ans{a.} Data Lake เป็น raw/schema-on-read
+    \item \ans{c.} raw diverse future analytics คือ Data Lake
+    \item \ans{a.} CAP trade-off
+    \item \ans{a.} Elasticity คือเพิ่มลด resource ตาม demand
+\end{enumerate}
+\end{multicols}
+
+\newpage
+\subsection*{Part 2: Short Answer Questions}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item TRC ใช้ตัวแปรแทนทั้ง tuple/row เช่น \texttt{t.Attribute}; DRC ใช้ตัวแปรแทนค่าในแต่ละ domain/column
+    \item \texttt{SELECT *} ดึง column เกินจำเป็น ทำให้ data transfer สูงขึ้น และลดโอกาสทำ projection pushdown ได้ดี
+    \item \texttt{Index Scan} ไล่อ่านช่วง/ส่วนของ index หลาย entry; \texttt{Index Seek} กระโดดไปยัง entry ที่เกี่ยวข้องโดยตรงมากกว่า จึงมักมีต้นทุนต่ำกว่า
+    \item ตัวอย่าง: query เดิมสองรอบใน transaction เดียวกัน
+\begin{lstlisting}[language=SQL,numbers=none]
+SELECT * FROM orders WHERE price > 1000;
+\end{lstlisting}
+    รอบสองเจอ row ใหม่ที่ transaction อื่น insert และ commit เข้ามา
+    \item ใช้ \texttt{SAVEPOINT} เช่น \texttt{SAVEPOINT sp1;} แล้ว \texttt{ROLLBACK TO sp1;}
+    \item ใช้ insert record ลงตาราง log หลัง row ใหม่ถูก insert สำเร็จ เช่น เก็บ \texttt{emp\_id}, action, timestamp
+    \item สร้าง view ที่เลือกเฉพาะ column ปลอดภัย เช่น \texttt{id}, \texttt{name}, \texttt{position} แล้ว grant ให้ user โดยไม่ให้เห็น \texttt{salary}
+    \item Database $\rightarrow$ Collection $\rightarrow$ Document $\rightarrow$ Field
+    \item Data Warehouse
+    \item ขัดกับ 2NF เพราะมี Partial Dependency จากส่วนหนึ่งของ composite key ไปยัง non-prime attributes
+\end{enumerate}
+
+\newpage
+\subsection*{Part 3: Long Questions}
+
+\subsubsection*{Question 1}
+\textbf{SQL}
+\begin{lstlisting}[language=SQL]
+SELECT DISTINCT C.Cname, C.Tier
+FROM CUSTOMER C
+JOIN ORDERS O ON C.Cid = O.Cid
+JOIN ORDER_ITEM I ON O.Oid = I.Oid
+JOIN PRODUCT P ON I.Pid = P.Pid
+JOIN SUPPLIER S ON P.SupplierId = S.SupplierId
+WHERE C.City = 'Bangkok'
+  AND O.Status = 'PAID'
+  AND P.Category = 'Storage'
+  AND S.Country = 'Japan';
+\end{lstlisting}
+
+\textbf{RA}
+\[
+\begin{aligned}
+&\pi_{\text{Cname},\text{Tier}}\Big(
+  \sigma_{\text{City}='Bangkok' \land \text{Status}='PAID' \land \text{Category}='Storage' \land \text{Country}='Japan'}\big(\\
+&\quad \text{CUSTOMER}
+  \bowtie_{\text{CUSTOMER.Cid}=\text{ORDERS.Cid}}
+  \text{ORDERS}
+  \bowtie_{\text{ORDERS.Oid}=\text{ORDER\_ITEM.Oid}}
+  \text{ORDER\_ITEM}\\
+&\quad \bowtie_{\text{ORDER\_ITEM.Pid}=\text{PRODUCT.Pid}}
+  \text{PRODUCT}
+  \bowtie_{\text{PRODUCT.SupplierId}=\text{SUPPLIER.SupplierId}}
+  \text{SUPPLIER}
+  \big)\Big)
+\end{aligned}
+\]
+
+\textbf{TRC}
+\[
+\begin{aligned}
+\{\, c.\text{Cname}, c.\text{Tier} \mid\;& c \in \text{CUSTOMER} \land c.\text{City}='Bangkok' \land\\
+&\exists o \in \text{ORDERS}\;
+\exists i \in \text{ORDER\_ITEM}\;
+\exists p \in \text{PRODUCT}\;
+\exists s \in \text{SUPPLIER}\\
+&(o.\text{Cid}=c.\text{Cid} \land i.\text{Oid}=o.\text{Oid} \land p.\text{Pid}=i.\text{Pid} \land\\
+&\quad s.\text{SupplierId}=p.\text{SupplierId} \land o.\text{Status}='PAID' \land\\
+&\quad p.\text{Category}='Storage' \land s.\text{Country}='Japan') \,\}
+\end{aligned}
+\]
+
+\textbf{DRC}
+\[
+\begin{aligned}
+\{\, cn,tier \mid\;& \exists cid,city,oid,odate,status,pid,qty,price,pn,cat,sid,sn,country\\
+&(\text{CUSTOMER}(cid,cn,city,tier) \land
+\text{ORDERS}(oid,cid,odate,status) \land\\
+&\text{ORDER\_ITEM}(oid,pid,qty,price) \land
+\text{PRODUCT}(pid,pn,cat,sid) \land\\
+&\text{SUPPLIER}(sid,sn,country) \land city='Bangkok' \land status='PAID' \land\\
+&cat='Storage' \land country='Japan') \,\}
+\end{aligned}
+\]
+
+\subsubsection*{Question 2}
+\textbf{SQL}
+\begin{lstlisting}[language=SQL]
+SELECT S.Sid, S.Sname
+FROM STUDENT S
+WHERE S.Major = 'CPE'
+  AND NOT EXISTS (
+      SELECT 1
+      FROM COURSE C
+      WHERE C.Track = 'Database'
+        AND NOT EXISTS (
+            SELECT 1
+            FROM ENROLL E
+            WHERE E.Sid = S.Sid
+              AND E.Cid = C.Cid
+              AND E.Grade IN ('A', 'B+', 'B')
+        )
+  );
+\end{lstlisting}
+
+\textbf{RA}
+\[
+\begin{aligned}
+DBCourse &= \pi_{\text{Cid}}(\sigma_{\text{Track}='Database'}(\text{COURSE}))\\
+GoodEnroll &= \pi_{\text{Sid},\text{Cid}}(\sigma_{\text{Grade}\in\{'A','B+','B'\}}(\text{ENROLL}))\\
+GoodStudent &= GoodEnroll \div DBCourse\\
+\text{Answer} &= \pi_{\text{Sid},\text{Sname}}(\sigma_{\text{Major}='CPE'}(\text{STUDENT}) \bowtie_{\text{STUDENT.Sid}=\text{GoodStudent.Sid}} GoodStudent)
+\end{aligned}
+\]
+
+\textbf{TRC}
+\[
+\begin{aligned}
+\{\, s.\text{Sid},s.\text{Sname} \mid\;& s \in \text{STUDENT} \land s.\text{Major}='CPE' \land\\
+&\forall c \in \text{COURSE}\,
+(c.\text{Track}='Database' \Rightarrow\\
+&\quad \exists e \in \text{ENROLL}\,(e.\text{Sid}=s.\text{Sid} \land e.\text{Cid}=c.\text{Cid} \land e.\text{Grade}\in\{'A','B+','B'\})) \,\}
+\end{aligned}
+\]
+
+\textbf{DRC}
+\[
+\begin{aligned}
+\{\, sid,sname \mid\;& \exists major,yr(
+\text{STUDENT}(sid,sname,major,yr) \land major='CPE' \land\\
+&\forall cid,cname,track(\text{COURSE}(cid,cname,track) \land track='Database' \Rightarrow\\
+&\quad \exists grade(\text{ENROLL}(sid,cid,grade) \land grade\in\{'A','B+','B'\}))) \,\}
+\end{aligned}
+\]
+
+\newpage
+\subsubsection*{Question 3: Normalization เฉลยละเอียดพร้อม FD Diagram}
+
+\textbf{เริ่มจาก Relation เดิม}
+\begin{center}
+\small\ttfamily
+\begin{tabular}{l}
+PROJECT\_ASSIGNMENT(EmpID, ProjectID, EmpName, DeptID, DeptName,\\
+\quad ProjectName, ClientID, ClientName,\\
+\quad ManagerID, ManagerName, Hours, SkillLevel)
+\end{tabular}
+\end{center}
+\noindent PK = \schema{\{EmpID, ProjectID\}}
+
+\vspace{0.2cm}
+\textbf{3.1 ตรวจ Normal Form เดิม}\\
+Relation เดิมถือว่าอยู่ใน \textbf{1NF เท่านั้น} เพราะทุก attribute เป็น atomic value แล้ว แต่ \textbf{ไม่ผ่าน 2NF} เนื่องจากมี partial dependency จากบางส่วนของ composite key ไปยัง non-prime attributes
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+    \node[fdcell, fill=cyan!15] (empid) at (0,0) {\uline{EmpID}};
+    \node[fdcell, fill=cyan!15, right=0cm of empid] (pid) {\uline{ProjectID}};
+    \node[fdcell, right=0cm of pid] (ename) {EmpName};
+    \node[fdcell, right=0cm of ename] (deptid) {DeptID};
+    \node[fdcell, right=0cm of deptid] (deptname) {DeptName};
+    \node[fdcellwide, right=0cm of deptname] (pname) {ProjectName};
+    \node[fdcell, right=0cm of pname] (clientid) {ClientID};
+    \node[fdcellwide, right=0cm of clientid] (clientname) {ClientName};
+    \node[fdcell, right=0cm of clientname] (managerid) {ManagerID};
+    \node[fdcellwide, right=0cm of managerid] (managername) {ManagerName};
+    \node[fdcell, right=0cm of managername] (hours) {Hours};
+    \node[fdcellwide, right=0cm of hours] (skill) {SkillLevel};
+
+    \draw (empid.north) -- ++(0,0.35) -| (pid.north);
+    \node[font=\scriptsize] at ($(empid.north)!0.5!(pid.north)+(0,0.55)$) {Composite PK};
+
+    \draw[fdarrow] (empid.south) -- ++(0,-0.35) -| (ename.south)
+        node[pos=0.22, below, fdnote]{partial};
+    \draw[fdarrow] (empid.south) -- ++(0,-0.70) -| (deptid.south);
+
+    \draw[fdarrow] (pid.south) -- ++(0,-1.05) -| (pname.south)
+        node[pos=0.17, below, fdnote]{partial};
+    \draw[fdarrow] (pid.south) -- ++(0,-1.40) -| (clientid.south);
+    \draw[fdarrow] (pid.south) -- ++(0,-1.75) -| (managerid.south);
+
+    \draw[fdarrow] ($(empid.south)!0.5!(pid.south)$) -- ++(0,-2.15) -| (hours.south)
+        node[pos=0.14, below, fdnote]{full};
+    \draw[fdarrow] ($(empid.south)!0.5!(pid.south)$) -- ++(0,-2.50) -| (skill.south);
+
+    \draw[fdarrowdash] (deptid.south) -- ++(0,-2.90) -| (deptname.south)
+        node[pos=0.20, below, fdnote]{transitive};
+    \draw[fdarrowdash] (clientid.south) -- ++(0,-3.25) -| (clientname.south)
+        node[pos=0.18, below, fdnote]{transitive};
+    \draw[fdarrowdash] (managerid.south) -- ++(0,-3.60) -| (managername.south)
+        node[pos=0.18, below, fdnote]{transitive};
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{สรุป 3.1:}
+\begin{itemize}
+    \item Partial Dependency: \schema{EmpID} $\rightarrow$ \schema{EmpName, DeptID}
+    \item Partial Dependency: \schema{ProjectID} $\rightarrow$ \schema{ProjectName, ClientID, ManagerID}
+    \item Full Dependency ที่ถูกต้องกับ key ทั้งก้อน: \schema{\{EmpID, ProjectID\}} $\rightarrow$ \schema{Hours, SkillLevel}
+    \item Transitive Dependency ที่จะต้องแก้ใน 3NF: \schema{DeptID} $\rightarrow$ \schema{DeptName}, \schema{ClientID} $\rightarrow$ \schema{ClientName}, \schema{ManagerID} $\rightarrow$ \schema{ManagerName}
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{3.2 แก้เป็น 2NF}\\
+แยก attribute ที่ขึ้นกับ \schema{EmpID} อย่างเดียว และ attribute ที่ขึ้นกับ \schema{ProjectID} อย่างเดียว ออกจากตารางกลาง เหลือเฉพาะ attribute ที่ขึ้นกับ key ทั้งก้อนใน \schema{ASSIGNMENT}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{4}{|c|}{\textbf{EMPLOYEE\_2NF}} \\
+    \hline
+    \uline{EmpID} & EmpName & DeptID & DeptName \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{6}{|c|}{\textbf{PROJECT\_2NF}} \\
+    \hline
+    \uline{ProjectID} & ProjectName & ClientID & ClientName & ManagerID & ManagerName \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{4}{|c|}{\textbf{ASSIGNMENT}} \\
+    \hline
+    \uline{EmpID} (FK) & \uline{ProjectID} (FK) & Hours & SkillLevel \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{FD diagram หลังได้ 2NF แต่ยังเห็นปัญหา 3NF:}
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+    \node[font=\scriptsize\bfseries] at (3.2,0.65) {EMPLOYEE\_2NF};
+    \node[fdcell, fill=cyan!15] (e1) at (0,0) {\uline{EmpID}};
+    \node[fdcell, right=0cm of e1] (e2) {EmpName};
+    \node[fdcell, right=0cm of e2] (e3) {DeptID};
+    \node[fdcell, right=0cm of e3] (e4) {DeptName};
+    \draw[fdarrow] (e1.south) -- ++(0,-0.35) -| (e3.south);
+    \draw[fdarrowdash] (e3.south) -- ++(0,-0.75) -| (e4.south)
+        node[pos=0.25, below, fdnote]{transitive};
+
+    \node[font=\scriptsize\bfseries] at (13,0.65) {PROJECT\_2NF};
+    \node[fdcell, fill=cyan!15] (p1) at (7.2,0) {\uline{ProjectID}};
+    \node[fdcellwide, right=0cm of p1] (p2) {ProjectName};
+    \node[fdcell, right=0cm of p2] (p3) {ClientID};
+    \node[fdcellwide, right=0cm of p3] (p4) {ClientName};
+    \node[fdcell, right=0cm of p4] (p5) {ManagerID};
+    \node[fdcellwide, right=0cm of p5] (p6) {ManagerName};
+    \draw[fdarrow] (p1.south) -- ++(0,-0.35) -| (p3.south);
+    \draw[fdarrow] (p1.south) -- ++(0,-0.65) -| (p5.south);
+    \draw[fdarrowdash] (p3.south) -- ++(0,-1.00) -| (p4.south)
+        node[pos=0.25, below, fdnote]{transitive};
+    \draw[fdarrowdash] (p5.south) -- ++(0,-1.35) -| (p6.south)
+        node[pos=0.22, below, fdnote]{transitive};
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{สรุป 3.2:} ผลลัพธ์ 2NF ถูกต้อง แต่ยังไม่ผ่าน 3NF เพราะยังเก็บ \schema{DeptName}, \schema{ClientName}, \schema{ManagerName} ไว้ในตารางที่ determinant ของมันไม่ใช่ key
+
+\newpage
+\textbf{3.3 แก้เป็น 3NF}\\
+แยก transitive dependency ออกเป็นตารางใหม่ โดยให้ determinant ที่เป็น non-key กลายเป็น PK ของตารางใหม่
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{2}{|c|}{\textbf{DEPARTMENT}} \\
+    \hline
+    \uline{DeptID} & DeptName \\
+    \hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{2}{|c|}{\textbf{CLIENT}} \\
+    \hline
+    \uline{ClientID} & ClientName \\
+    \hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{2}{|c|}{\textbf{MANAGER}} \\
+    \hline
+    \uline{ManagerID} & ManagerName \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{3}{|c|}{\textbf{EMPLOYEE}} \\
+    \hline
+    \uline{EmpID} & EmpName & DeptID (FK) \\
+    \hline
+\end{tabular}
+\quad
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{4}{|c|}{\textbf{PROJECT}} \\
+    \hline
+    \uline{ProjectID} & ProjectName & ClientID (FK) & ManagerID (FK) \\
+    \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\scriptsize
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \rowcolor{cyan!15}
+    \multicolumn{4}{|c|}{\textbf{ASSIGNMENT}} \\
+    \hline
+    \uline{EmpID} (FK) & \uline{ProjectID} (FK) & Hours & SkillLevel \\
+    \hline
+\end{tabular}
+\end{center}
+
+\textbf{FD diagram หลัง 3NF:}
+\begin{center}
+\resizebox{0.92\textwidth}{!}{%
+\begin{tikzpicture}
+    \node[fdcell, fill=cyan!15] (d1) at (0,0) {\uline{DeptID}};
+    \node[fdcellwide, right=0cm of d1] (d2) {DeptName};
+    \draw[fdarrow] (d1.south) -- ++(0,-0.35) -| (d2.south);
+
+    \node[fdcell, fill=cyan!15] (c1) at (4.5,0) {\uline{ClientID}};
+    \node[fdcellwide, right=0cm of c1] (c2) {ClientName};
+    \draw[fdarrow] (c1.south) -- ++(0,-0.35) -| (c2.south);
+
+    \node[fdcell, fill=cyan!15] (m1) at (9.2,0) {\uline{ManagerID}};
+    \node[fdcellwide, right=0cm of m1] (m2) {ManagerName};
+    \draw[fdarrow] (m1.south) -- ++(0,-0.35) -| (m2.south);
+
+    \node[font=\scriptsize] at (5.7,-1.0) {ทุก determinant ของตารางแยกเป็น PK ของตารางตัวเองแล้ว จึงไม่เหลือ transitive dependency};
+\end{tikzpicture}
+}
+\end{center}
+
+\textbf{Mapping FK:}
+\begin{itemize}
+    \item \schema{EMPLOYEE.DeptID} อ้างถึง \schema{DEPARTMENT.DeptID}
+    \item \schema{PROJECT.ClientID} อ้างถึง \schema{CLIENT.ClientID}
+    \item \schema{PROJECT.ManagerID} อ้างถึง \schema{MANAGER.ManagerID}
+    \item \schema{ASSIGNMENT.EmpID} อ้างถึง \schema{EMPLOYEE.EmpID}
+    \item \schema{ASSIGNMENT.ProjectID} อ้างถึง \schema{PROJECT.ProjectID}
+\end{itemize}
+
+\textbf{ประโยคสรุปแบบส่งข้อสอบ:}\\
+Relation เดิมอยู่ใน 1NF แต่ไม่ผ่าน 2NF เพราะมี partial dependency จาก \schema{EmpID} และ \schema{ProjectID} ซึ่งเป็นเพียงบางส่วนของ composite PK หลังแยกเป็น 2NF แล้วยังไม่ผ่าน 3NF เพราะมี transitive dependency ได้แก่
+\begin{itemize}[leftmargin=1.5em]
+    \item \schema{EmpID} $\rightarrow$ \schema{DeptID} $\rightarrow$ \schema{DeptName}
+    \item \schema{ProjectID} $\rightarrow$ \schema{ClientID} $\rightarrow$ \schema{ClientName}
+    \item \schema{ProjectID} $\rightarrow$ \schema{ManagerID} $\rightarrow$ \schema{ManagerName}
+\end{itemize}
+ดังนั้นจึงต้องแยก \schema{DEPARTMENT}, \schema{CLIENT}, และ \schema{MANAGER} ออกมา
+
+\newpage
+\section*{RECAP: สรุปเนื้อหาจาก Mock Exam สำหรับอ่านก่อนสอบ}
+\textit{ส่วนนี้สรุปเป็น pattern จำสอบ ไม่ใช่การคัดโจทย์มาแปะตรง ๆ}
+
+\subsection*{RECAP 1: Query Languages, RA, TRC, DRC}
+\begin{itemize}
+    \item \textbf{Relational Algebra (RA)} เป็นภาษาแบบ Procedural เพราะต้องบอกขั้นตอนว่าจะ select, project, join อย่างไร
+    \item \textbf{SQL, TRC, DRC} เป็นภาษาแบบ Non-procedural เพราะบอกเงื่อนไขของข้อมูลที่ต้องการมากกว่าบอกแผนทำงานทีละขั้น
+    \item \textbf{TRC} ใช้ตัวแปรแทน tuple ทั้งแถว เช่น \texttt{t.EmpID}; \textbf{DRC} ใช้ตัวแปรแทนค่าในแต่ละ domain หรือแต่ละ column
+    \item เจอคำว่า ``มีอย่างน้อยหนึ่ง'' ให้นึกถึง $\exists$ หรือ \texttt{EXISTS}; เจอคำว่า ``ทุก'' ให้นึกถึง $\forall$ หรือ pattern แบบ double \texttt{NOT EXISTS}
+    \item Query แนว division เช่น ``ลูกค้าซื้อสินค้าทุกชิ้น'' หรือ ``นักเรียนลงทุกวิชา'' มักเขียนด้วยเงื่อนไขว่าไม่มี item ใดที่ขาดไป
+    \item Cartesian Product ได้จำนวนแถวเยอะมากเพราะเป็นการจับคู่ทุกแถวของตารางหนึ่งกับทุกแถวของอีกตารางหนึ่ง จึงควรตามด้วยเงื่อนไข join ที่ถูกต้องเสมอ
+\end{itemize}
+
+\subsection*{RECAP 2: Query Optimization}
+\begin{itemize}
+    \item \textbf{Predicate Pushdown} คือดันเงื่อนไขกรองแถวให้ทำเร็วที่สุดก่อน join เพื่อลดจำนวน tuple ที่ต้องประมวลผล
+    \item \textbf{Projection Pushdown} คือเลือกเฉพาะ column ที่จำเป็นให้เร็วที่สุด เพื่อลด data transfer และลดขนาด intermediate result
+    \item หลีกเลี่ยง \texttt{SELECT *} เพราะดึง column เกินจำเป็น ทำให้ optimizer มีพื้นที่ optimize น้อยลง และใช้ I/O มากขึ้น
+    \item \textbf{WHERE} กรองก่อน \texttt{GROUP BY}; \textbf{HAVING} กรองหลัง aggregate แล้ว ถ้าเงื่อนไขไม่เกี่ยวกับ aggregate ควรใส่ใน \texttt{WHERE}
+    \item Index ช่วยอ่านเร็วขึ้น แต่ทำให้ \texttt{INSERT}, \texttt{UPDATE}, \texttt{DELETE} ช้าลง เพราะ index structure ต้องถูกดูแลเพิ่ม
+    \item Composite index ต้องคิดลำดับ column ให้ตรงกับเงื่อนไขค้นหาหลัก เช่นค้นด้วย department ก่อน salary ก็ควรมี index เริ่มจาก department
+    \item Join order มีผลมาก ตารางที่ถูกกรองแล้วเหลือแถวน้อยควรถูก join เร็ว เพื่อไม่ให้ intermediate result โตเกินจำเป็น
+    \item \textbf{Horizontal partitioning} แบ่งตามแถว เช่นแบ่ง customer ตามช่วง A--Z หรือแบ่ง order ตามปี; \textbf{Vertical partitioning} แบ่งตาม column
+    \item \textbf{Replication} คือทำสำเนาข้อมูลหลายชุดเพื่อ reliability และ availability แต่ต้องระวัง consistency และต้นทุน sync
+\end{itemize}
+
+\subsection*{RECAP 3: Transaction, ACID, Concurrency}
+\begin{itemize}
+    \item \textbf{Atomicity} คือ transaction ต้องสำเร็จทั้งก้อนหรือยกเลิกทั้งก้อน ไม่มีครึ่ง ๆ กลาง ๆ
+    \item \textbf{Consistency} คือก่อนและหลัง transaction ฐานข้อมูลต้องไม่ละเมิด constraint
+    \item \textbf{Isolation} คือ transaction ที่รันพร้อมกันต้องไม่รบกวนกันจนได้ผลผิดจากที่ควร
+    \item \textbf{Durability} คือ commit แล้วข้อมูลต้องอยู่รอดแม้ระบบล่ม
+    \item \textbf{Dirty Read} คืออ่านค่าที่ยังไม่ commit; \textbf{Non-repeatable Read} คืออ่าน row เดิมสองครั้งแล้วค่าเปลี่ยน; \textbf{Phantom Read} คือ query เงื่อนไขเดิมแล้วรอบหลังมีแถวใหม่โผล่
+    \item Isolation ยิ่งสูงยิ่งกันปัญหา concurrency ได้ดี แต่แลกกับ performance และโอกาส lock/block ที่มากขึ้น
+    \item \textbf{Serializable} ปลอดภัยสุดในเชิง isolation เพราะทำให้ผลลัพธ์เหมือน transaction รันเรียงทีละตัว
+    \item \texttt{SAVEPOINT} ใช้ตั้งจุด rollback ย่อยใน transaction; \texttt{SELECT FOR UPDATE} ใช้ lock row ที่กำลังจะอ่านเพื่อแก้ไข
+    \item \textbf{Autocommit} ทำให้แต่ละ SQL statement ถูก commit อัตโนมัติ จึงต้องปิดหรือเริ่ม transaction เองถ้าต้องการ rollback หลาย statement พร้อมกัน
+\end{itemize}
+
+\subsection*{RECAP 4: Advanced SQL, Trigger, View, Security}
+\begin{itemize}
+    \item \textbf{Trigger} คือ logic ที่ทำงานอัตโนมัติเมื่อเกิด event เช่น \texttt{INSERT}, \texttt{UPDATE}, \texttt{DELETE}
+    \item \textbf{BEFORE Trigger} เหมาะกับการ validate หรือปรับค่าก่อนบันทึก; \textbf{AFTER Trigger} เหมาะกับ audit log หรือ action หลังบันทึกสำเร็จ
+    \item \textbf{Assertion} ใช้ตรวจ constraint ที่อาจเกี่ยวหลายตาราง แต่ DBMS จำนวนมากไม่รองรับเต็มรูปแบบ จึงมักต้องใช้ trigger หรือ application logic แทน
+    \item \texttt{GRANT} ให้สิทธิ์, \texttt{REVOKE} ถอนสิทธิ์; เวลาให้สิทธิ์ควรให้เท่าที่จำเป็น ไม่ควรให้กว้างเกินงาน
+    \item \textbf{View} เป็น virtual table ใช้ซ่อน column สำคัญ เช่น salary หรือใช้ทำ interface ที่อ่านง่ายให้ user
+    \item View ที่ update กลับตารางจริงได้มักต้องเรียบง่าย อิง table เดียว และไม่ควรมี aggregate, \texttt{GROUP BY}, \texttt{DISTINCT}, หรือ join ซับซ้อน
+\end{itemize}
+
+\subsection*{RECAP 5: NoSQL and MongoDB}
+\begin{itemize}
+    \item \textbf{NoSQL} แปลว่า Not Only SQL เหมาะกับงานที่ schema ยืดหยุ่น scale ง่าย หรือข้อมูลมีโครงสร้างหลากหลาย
+    \item โครงสร้าง MongoDB จำจากใหญ่ไปเล็ก: \textbf{Database} $\rightarrow$ \textbf{Collection} $\rightarrow$ \textbf{Document} $\rightarrow$ \textbf{Field}
+    \item MongoDB เก็บข้อมูลแบบ BSON ซึ่งคล้าย JSON แต่รองรับชนิดข้อมูลเพิ่มเติมและเหมาะกับการจัดเก็บจริงใน database
+    \item JSON ต้องใช้ double quotes กับ key/string และห้ามมี trailing comma
+    \item Document database เหมาะกับข้อมูลที่มี nested object หรือ array; key-value เหมาะกับ cache/session; graph เหมาะกับข้อมูล relationship-heavy
+    \item \textbf{Mongoose} เป็น ODM ฝั่ง Node.js ใช้กำหนด schema/model และช่วยคุยกับ MongoDB ในระดับ object
+    \item จุดที่ออกสอบบ่อยคือให้เลือกว่า use case แบบนี้ควรใช้ database ประเภทใด ไม่ใช่จำชื่ออย่างเดียว
+\end{itemize}
+
+\subsection*{RECAP 6: OLTP, OLAP, Warehouse, Lake, Cloud}
+\begin{itemize}
+    \item \textbf{OLTP} เน้น transaction สั้น ๆ จำนวนมาก เช่น insert order, update stock, transfer money
+    \item \textbf{OLAP} เน้น query วิเคราะห์ข้อมูลก้อนใหญ่ เช่น report, dashboard, trend, aggregation
+    \item \textbf{Operational Database} ใช้กับงานประจำวันและข้อมูลปัจจุบัน; \textbf{Data Warehouse} ใช้เก็บข้อมูลประวัติที่จัดรูปแล้วเพื่อวิเคราะห์
+    \item \textbf{Data Lake} เก็บข้อมูล raw หลากหลายรูปแบบ ใช้แนวคิด schema-on-read คือค่อยตีความ schema ตอนนำไปใช้
+    \item ถ้าโจทย์บอกข้อมูลสะอาด เป็นโครงสร้าง และใช้ทำ BI ระยะยาว ให้นึกถึง Data Warehouse; ถ้าบอก raw, diverse, future analytics ให้นึกถึง Data Lake
+    \item \textbf{CAP} เตือนว่า distributed system ต้อง trade-off ระหว่าง Consistency, Availability, และ Partition Tolerance
+    \item \textbf{Elasticity} คือเพิ่มลด resource ตาม demand ได้ เหมาะกับ cloud workload ที่ traffic ขึ้นลงไม่คงที่
+\end{itemize}
+
+\subsection*{RECAP 7: Normalization แบบจับโจทย์ตาราง}
+\begin{itemize}
+    \item \textbf{1NF} ตรวจก่อนว่าทุกช่องเป็น atomic หรือไม่ ถ้ามี list, repeating group, หลายค่าในช่องเดียว ให้แตกออกเป็นหลายแถวหรือตารางลูก
+    \item \textbf{2NF} ตรวจเฉพาะกรณี primary key เป็น composite key ถ้า non-prime attribute พึ่งแค่บางส่วนของ key ให้แยกตารางออก
+    \item \textbf{3NF} ตรวจว่า non-key attribute ไปกำหนด non-key attribute ด้วยกันหรือไม่ ถ้ามีให้แยก determinant นั้นออกเป็นตารางใหม่
+    \item เวลาทำข้อสอบให้ขีดเส้นใต้ PK ก่อน แล้ววง FK หรือเขียนกำกับไว้ จากนั้นค่อยลาก FD ว่าใครกำหนดใคร
+    \item ถ้าโจทย์ให้ตารางที่ดูเหมือน normalize แล้ว อย่าเชื่อหน้าตา ให้ถามว่า attribute นี้ขึ้นกับ key ทั้งก้อนจริงไหม และ determinant ฝั่งซ้ายเป็น key ของตารางนั้นหรือเปล่า
+    \item Pattern หลอกบ่อย: ตารางกลางที่มี composite key แต่ยังแอบเก็บชื่อพนักงาน ชื่อโปรเจกต์ หรือชื่อแผนกไว้ด้วย ทำให้เกิด partial/transitive dependency
+    \item ตารางหลังแก้ 3NF ควรอ่านแล้วชัดว่า table หลักเก็บ entity, table กลางเก็บ relationship, และ FK ใช้โยงกลับโดยไม่ duplicate ชื่อที่ lookup ได้
+\end{itemize}
+
+\end{document}
