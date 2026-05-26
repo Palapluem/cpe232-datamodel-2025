@@ -467,7 +467,7 @@
 
     \item \textbf{Overfitting:} Training 98\%, Test 62\% คือ Overfitting ชัดเจน Model จดจำ training data มากเกินไป วิธีแก้: (1) ลด max\_depth / เพิ่ม min\_samples\_split ใน DT (2) เพิ่ม L1/L2 Regularization (3) ใช้ k-Fold CV เพื่อ estimate performance จริง (4) เพิ่มข้อมูล training (5) Early Stopping
 
-    \item \textbf{CM Interpretation:} TP=20, FN=80 หมายความว่า Recall = 20/100 = 0.20 ต่ำมาก --- model ``พลาด'' ผู้ป่วยจริง 80\% ถือว่า\textbf{อันตรายมาก} ในบริบทการแพทย์ ควรปรับ decision threshold ให้ต่ำลง หรือ oversample class บวก (SMOTE) เพื่อให้ model ตรวจจับ positive case ได้ดีขึ้น
+    \item \textbf{CM Interpretation:} TP=20, FN=80 หมายความว่า Recall = 20/100 = 0.20 ต่ำมาก --- model ``พลาด'' ผู้ป่วยจริง 80\% ถือว่า\textbf{อันตรายมาก} ในบริบทการแพทย์ ควรปรับ decision threshold ให้ต่ำลง  เพื่อให้ model ตรวจจับ positive case ได้ดีขึ้น
 
     \item \textbf{Silhouette 0.12:} ค่า 0.12 ใกล้ 0 บ่งชี้ว่า cluster ทับซ้อนกัน หรือจุดข้อมูลอยู่บน boundary ระหว่าง cluster --- คุณภาพการ cluster\textbf{ต่ำมาก} วิธี diagnose: ใช้ Elbow Method (plot WCSS vs k) หรือ Silhouette Score vs k เพื่อหาค่า k ที่เหมาะสม
 
