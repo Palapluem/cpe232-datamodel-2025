@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.9.4)  26 MAY 2026 19:16
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.9.4)  26 MAY 2026 19:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./quiz/mock-exam/CPE232_Final_MockExam.tex
-(quiz/mock-exam/CPE232_Final_MockExam.tex
+**./CPE232_Final_MockExam.tex
+(CPE232_Final_MockExam.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
 (C:\Users\Admin\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -790,7 +790,7 @@ Space].
 (fontspec)             New/BI/OT:script=latn;language=dflt;"
 
 
-(D:\cpe232-datamodel-2025\quiz\mock-exam\CPE232_Final_MockExam.aux)
+(CPE232_Final_MockExam.aux)
 \openout1 = `CPE232_Final_MockExam.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
@@ -951,19 +951,6 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [9]
 
 [10]
-! Misplaced alignment tab character &.
-<argument> Part 5: Calculation &
-                                 Structure (35 คะแนน)
-l.308 ...rt 5: Calculation & Structure (35 คะแนน)}
-                                                  
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-
 
 [11]
 
@@ -973,6 +960,7 @@ might try typing `S' now just to see what is salvageable.
 
 [14]
 
+[15]
 
 
 
@@ -984,12 +972,13 @@ might try typing `S' now just to see what is salvageable.
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
+
+Underfull \hbox (badness 10000) in paragraph at lines 443--444
 []\TU/THSarabunNew(0)/b/n/12 F \TU/THSarabunNew(0)/m/n/12 (Entropy=0 คือ
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 444--445
+Underfull \hbox (badness 10000) in paragraph at lines 446--447
 []\TU/THSarabunNew(0)/b/n/12 T \TU/THSarabunNew(0)/m/n/12 (Stratified รักษา
  []
 
@@ -1005,16 +994,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 444--445
 
 
 
-[15]
-
 [16]
-Underfull \hbox (badness 5008) in paragraph at lines 516--517
+
+[17]
+Underfull \hbox (badness 5008) in paragraph at lines 518--519
 []|\TU/THSarabunNew(0)/m/n/10.95 Time series, sequential
  []
 
 
-
-[17]
 
 [18]
 
@@ -1022,42 +1009,43 @@ Underfull \hbox (badness 5008) in paragraph at lines 516--517
 
 [20]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [21]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [22]
 
-[23] (D:\cpe232-datamodel-2025\quiz\mock-exam\CPE232_Final_MockExam.aux)
+[23]
+
+[24] (CPE232_Final_MockExam.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-08-13>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 21371 strings out of 403249
- 449696 string characters out of 5460861
+ 21369 strings out of 403249
+ 449449 string characters out of 5460861
  875239 words of memory out of 5000000
  49471 multiletter control sequences out of 15000+600000
  633436 words of font info for 104 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,12n,93p,495b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,12n,93p,480b,668s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on D:\cpe232-datamodel-2025\quiz\mock-exam\CPE232_Final_MockExam
-.pdf (23 pages).
+Output written on CPE232_Final_MockExam.pdf (24 pages).
