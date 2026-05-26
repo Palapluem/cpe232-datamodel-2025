@@ -62,48 +62,48 @@
 \begin{enumerate}[label=\textbf{\arabic*.}]
 
 \needspace{7\baselineskip}
-\item งานใดต่อไปนี้ที่ไม่เหมาะกับ Clustering?
+\item งานวิเคราะห์ข้อมูลในข้อใดต่อไปนี้ที่ \textbf{ไม่เหมาะสม} กับการประยุกต์ใช้แบบจำลอง Unsupervised Learning ประเภท Clustering?
 \begin{enumerate}[label=\alph*.]
-    \item การแบ่งกลุ่มลูกค้าตามพฤติกรรมการซื้อ
-    \item การสรุปลักษณะประชากรในแต่ละกลุ่ม
-    \item การดึงข้อมูลจากฐานข้อมูลด้วยเงื่อนไขที่กำหนด
-    \item การหาคนที่มีพฤติกรรมแตกต่างไปจากคนอื่น (Anomaly)
+    \item การแบ่งกลุ่มลูกค้าที่มีพฤติกรรมการซื้อคล้ายคลึงกัน (Customer Segmentation)
+    \item การสร้างกลุ่มของบทความที่มีเนื้อหาใกล้เคียงกันสำหรับการจัดหมวดหมู่
+    \item การทำนายแนวโน้มยอดขายในเดือนหน้าจากข้อมูลในอดีต (Sales Forecasting)
+    \item การตรวจหาลูกค้าหรือธุรกรรมที่มีพฤติกรรมแตกต่างไปจากกลุ่มหลัก (Anomaly/Outlier Detection)
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item การวัดประสิทธิผลข้อใดต่อไปนี้ที่ไม่เหมาะสมกับแบบจำลอง Regression?
+\item เมทริกซ์ประเมินผล (Evaluation Metric) ในข้อใดต่อไปนี้ ที่มักถูกนำมาใช้ประเมินโมเดลประเภท Classification แต่ \textbf{ไม่สามารถ} นำมาใช้วัดประสิทธิภาพของแบบจำลอง Regression ได้?
 \begin{enumerate}[label=\alph*.]
-    \item RMSE
-    \item ^2$ Score
-    \item MAE
-    \item Precision
+    \item Root Mean Squared Error (RMSE)
+    \item $R^2$ Score (Coefficient of Determination)
+    \item Mean Absolute Error (MAE)
+    \item Recall / Precision
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item แบบจำลอง Machine Learning ใดที่ใช้หลักการหาความเหมือน (Similarity) เป็นหลักในการทำนาย?
+\item แบบจำลองหรืออัลกอริทึมใดต่อไปนี้ที่ต้องพึ่งพาการคำนวณระยะห่าง (Distance Metric) เพื่อประเมินความเหมือน (Similarity) ของข้อมูลเป็นกลไกหลักในการทำนาย?
 \begin{enumerate}[label=\alph*.]
     \item Logistic Regression
     \item K-Nearest Neighbors (KNN)
-    \item Decision Tree
-    \item Linear Regression
+    \item Decision Tree Classifier
+    \item Multiple Linear Regression
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item สมการ Linear Regression ในข้อใดมี Interaction Term?
+\item สมการเชิงเส้นแบบพหุคูณ (Multiple Linear Regression) ในข้อใด \textbf{มีการรวมตัวแปรปฏิสัมพันธ์ (Interaction Term)} เข้าไปในแบบจำลอง?
 \begin{enumerate}[label=\alph*.]
-    \item  = c_0 + c_1x_1$
-    \item  = c_0 + c_1x_1 + c_2x_2$
-    \item  = c_0 + c_1x_1 + c_2x_2 + c_3x_1x_2$
-    \item  = c_0 x_1 + c_1 x_2$
+    \item $\hat{y} = \beta_0 + \beta_1 x_1$
+    \item $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2$
+    \item $\hat{y} = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3(x_1 \times x_2)$
+    \item $\hat{y} = \beta_0 x_1 + \beta_1 x_2 + \epsilon$
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item ข้อใดไม่ถูกต้องเกี่ยวกับ Hierarchical Clustering?
+\item ข้อความใดต่อไปนี้ที่ \textbf{ไม่ถูกต้อง} และเป็นการอธิบายกลไกที่ผิดสำหรับ Agglomerative Hierarchical Clustering?
 \begin{enumerate}[label=\alph*.]
-    \item Dendrogram เป็นตัวแทนที่แสดงให้เห็นถึงความใกล้เคียงของข้อมูล
-    \item ในขั้นตอนแรก ข้อมูลแต่ละตัวอย่างจะถูกถือว่าเป็นหนึ่ง Cluster
-    \item เราสามารถหากลุ่ม (Cluster) ได้โดยการตัด Dendrogram ที่ระดับความสูงที่เหมาะสม
-    \item ข้อมูลแต่ละตัวจะถูกกำหนดเข้าไปอยู่ใน Cluster ที่มี Centroid ใกล้ที่สุดในการอัปเดตแต่ละรอบ
+    \item แผนภาพ Dendrogram จะแสดงให้เห็นถึงความใกล้เคียงและการรวมกลุ่มของข้อมูลในแต่ละขั้นตอน
+    \item ในจุดเริ่มต้นของการทำงาน ข้อมูลแต่ละตัวแปร (Data point) จะถูกพิจารณาให้เป็นหนึ่ง Cluster แยกกัน
+    \item เราสามารถระบุจำนวน Cluster สุดท้ายได้โดยการลากเส้นตัด Dendrogram แนวนอนที่ระดับความสูงใดๆ ที่เหมาะสม
+    \item ข้อมูลแต่ละตัวจะถูกบังคับอัปเดตให้อยู่ในกลุ่มตามค่าเฉลี่ยใหม่ (Centroid) ของแต่ละรอบการทำงาน (Iteration) อย่างต่อเนื่อง
 \end{enumerate}
 
 \end{enumerate}
@@ -114,33 +114,33 @@
 \begin{enumerate}[label=\textbf{\arabic*.},start=6]
 
 \needspace{8\baselineskip}
-\item ข้อใดบ้างเป็น \textbf{Hyperparameter} (กำหนดก่อน training)?
+\item ข้อใดต่อไปนี้จัดเป็น \textbf{Hyperparameter} (พารามิเตอร์ที่ต้องกำหนดล่วงหน้าก่อนกระบวนการ Training เริ่มขึ้น)?
 \begin{enumerate}[label=\alph*.]
-    \item \texttt{max\_depth} ของ Decision Tree
-    \item ค่า weight ที่ model เรียนรู้ระหว่าง Gradient Descent
-    \item Learning Rate ($\alpha$) ใน Gradient Descent
-    \item จำนวนคลัสเตอร์ (k) ใน K-Means (\texttt{n\_estimators})
-    \item ค่า bias term ที่ optimize ผ่าน loss function
+    \item ค่า \texttt{max\_depth} ของแบบจำลอง Decision Tree
+    \item ค่าสัมประสิทธิ์ (Weights) ที่โมเดลเรียนรู้และปรับปรุงระหว่างกระบวนการ Gradient Descent
+    \item อัตราการเรียนรู้ (Learning Rate, $\alpha$) ในสมการ Gradient Descent
+    \item จำนวนคลัสเตอร์ $k$ (หรือ \texttt{n\_clusters}) สำหรับอัลกอริทึม K-Means
+    \item ค่าจุดตัดแกน (Bias Term) ที่ได้หลังจากการดำเนินการ Optimization ของ Loss function
 \end{enumerate}
 
 \needspace{8\baselineskip}
-\item ข้อใดบ้างช่วย\textbf{ลด Overfitting} ได้?
+\item แนวทางหรือเทคนิคในข้อใดบ้างที่มีส่วนช่วยวิศวกรข้อมูลในการ \textbf{ลดปัญหา Overfitting} ได้?
 \begin{enumerate}[label=\alph*.]
-    \item เพิ่มข้อมูล training
-    \item ลด \texttt{max\_depth} ใน Decision Tree
-    \item เพิ่มจำนวน features ใน dataset
-    \item ใช้ L1/L2 Regularization
-    \item เพิ่ม learning rate เป็น 2 เท่า
+    \item การเพิ่มปริมาณของข้อมูล (Training Data) ให้มีจำนวนมากและครอบคลุมยิ่งขึ้น
+    \item การประยุกต์ใช้เทคนิค L1/L2 Regularization เพื่อทำโทษ weight ที่สูงเกินไป
+    \item การลดค่า \texttt{max\_depth} เพื่อป้องกันไม่ให้ Decision Tree ซับซ้อนเกินไป
+    \item การเพิ่มจำนวนฟีเจอร์ (Features) เข้าไปใน Dataset เพื่อเพิ่มรายละเอียดให้แบบจำลอง
+    \item การเพิ่ม Learning Rate เป็นสองเท่าให้ Gradient Descent ลู่เข้าสู่คำตอบเร็วขึ้น
 \end{enumerate}
 
 \needspace{8\baselineskip}
-\item ข้อใดบ้างเป็นข้อความที่\textbf{ถูกต้อง}เกี่ยวกับ Silhouette Score?
+\item ข้อใดบ้างเป็นข้อความที่ \textbf{อธิบายได้ถูกต้อง} เกี่ยวข้องกับ Silhouette Score สำหรับประเมินโหมด Clustering?
 \begin{enumerate}[label=\alph*.]
-    \item ค่าอยู่ในช่วง $[-1, +1]$
-    \item ค่าใกล้ +1 บ่งชี้ว่า cluster มีความแน่นและแยกจากกันชัดเจน
-    \item ค่าลบหมายความว่าจุดนั้นถูก assign ผิด cluster
-    \item ค่า 0 บ่งชี้ว่า cluster สมบูรณ์แบบ
-    \item ใช้ได้เฉพาะกับ K-Means เท่านั้น
+    \item ค่านี้จะตกอยู่ในช่วงตั้งแต่ $[-1, +1]$ เสมอ
+    \item หากค่าของจุดข้อมูลใกล้ $+1$ แสดงว่าข้อมูลนั้นอยู่ถูกคลัสเตอร์และแยกออกจากกลุ่มอื่นชัดเจน
+    \item หากค่าประเมินติดลบ (Negative value) หมายความว่าจุดข้อมูลดังกล่าวอาจถูกจัด (Assign) กลุ่มผิด
+    \item หากค่าอยู่ใกล้ $0$ แสดงว่าโมเดลแบ่ง Cluster ได้สมบูรณ์แบบที่สุด (Perfect clusters)
+    \item สามารถนำมาใช้ประเมินผลได้เฉพาะอัลกอริทึม K-Means เท่านั้น
 \end{enumerate}
 
 \end{enumerate}
@@ -149,13 +149,13 @@
 \textit{เขียน T หรือ F ในช่องว่าง}
 
 \begin{enumerate}[label=\textbf{\arabic*.},start=9]
-    \item \tf{} \quad Entropy = 0 หมายความว่า node นั้น\textbf{ไม่บริสุทธิ์} (impure) อย่างสมบูรณ์
+    \item \tf{} \quad ค่า Entropy = 0 หมายความว่า Node นั้น \textbf{ไม่มีความบริสุทธิ์} (Completely Impure) เลย
     \vspace{0.3cm}
-    \item \tf{} \quad ค่า $R^2$ (Coefficient of Determination) อาจมีค่าติดลบได้ในบางกรณี
+    \item \tf{} \quad ค่า $R^2$ (Coefficient of Determination) สำหรับโมเดล Regression ในทางปฏิบัติอาจให้ผลลัพธ์ติดลบได้เช่นกัน หากทำนายสู้ค่าเฉลี่ยไม่ได้
     \vspace{0.3cm}
-    \item \tf{} \quad K-Means รับประกันว่า converge ไปที่ global optimum เสมอ
+    \item \tf{} \quad อัลกอริทึม K-Means การันตีการลู่เข้า (Converge) สู่จุด Global Optimum เสมอ ไม่ว่าจะสุ่มจุดตั้งต้น (Initial Centroids) แบบใดก็ตาม
     \vspace{0.3cm}
-    \item \tf{} \quad Stratified k-Fold Cross-Validation รักษาสัดส่วน class ในแต่ละ fold ให้ใกล้เคียงกับ dataset ต้นฉบับ
+    \item \tf{} \quad Stratified k-Fold Cross-Validation จะช่วยรักษาสัดส่วน (Ratio) ของ Target class ในข้อมูลสำหรับแต่ละ Fold เอาไว้ให้ใกล้เคียงกับจำนวนเต็มใน Dataset เดิม
     \vspace{0.3cm}
 \end{enumerate}
 
@@ -430,8 +430,8 @@
 
 \noindent\textbf{1.2 Multiple Selection}
 \begin{itemize}
-    \item \textbf{ข้อ 6:} \ans{a, c, d} (max\_depth, Learning Rate, n\_estimators คือ Hyperparameters; b,e คือ learned parameters)
-    \item \textbf{ข้อ 7:} \ans{a, b, d} (เพิ่มข้อมูล, ลด max\_depth, L1/L2 Reg ลด overfit; c เพิ่ม features อาจทำ overfit มากขึ้น; e เพิ่ม LR อาจทำให้ diverge)
+    \item \textbf{ข้อ 6:} \ans{a, c, d} (max\_depth, Learning Rate, n\_clusters คือ Hyperparameters; b,e คือ learned parameters)
+      \item \textbf{??? 7:} \ans{a, b, c} (??????????????, L1/L2 Regularization, ???????? max\_depth ?????? Overfitting ???; ???? d ?????? curse of dimensionality; e ?????? diverge)
     \item \textbf{ข้อ 8:} \ans{a, b, c} (ช่วง -1 ถึง +1, ค่าใกล้ +1 ดี, ค่าลบ = misclustered; d ผิด ค่า 0 = on boundary; e ผิด Silhouette ใช้กับ clustering ทั่วไป)
 \end{itemize}
 
