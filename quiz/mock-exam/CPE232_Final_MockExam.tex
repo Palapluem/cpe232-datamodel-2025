@@ -62,48 +62,48 @@
 \begin{enumerate}[label=\textbf{\arabic*.}]
 
 \needspace{7\baselineskip}
-\item ข้อใดอธิบาย Naive Bayes Classifier ได้ถูกต้องที่สุด?
+\item งานใดต่อไปนี้ที่ไม่เหมาะกับ Clustering?
 \begin{enumerate}[label=\alph*.]
-    \item สร้างต้นไม้ตัดสินใจโดยใช้ Information Gain เลือก attribute ที่ดีที่สุด
-    \item ใช้ทฤษฎีของเบย์และสมมติว่า features ทุกตัวมีความเป็นอิสระต่อกัน
-    \item หาจุดที่ใกล้ที่สุด k จุดในพื้นที่ feature แล้ว vote ผลลัพธ์
-    \item สร้าง Hyperplane เพื่อแบ่งกลุ่มข้อมูลให้มี margin กว้างที่สุด
+    \item การแบ่งกลุ่มลูกค้าตามพฤติกรรมการซื้อ
+    \item การสรุปลักษณะประชากรในแต่ละกลุ่ม
+    \item การดึงข้อมูลจากฐานข้อมูลด้วยเงื่อนไขที่กำหนด
+    \item การหาคนที่มีพฤติกรรมแตกต่างไปจากคนอื่น (Anomaly)
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item เหตุใด MSE จึงลงโทษ error ขนาดใหญ่หนักกว่า MAE?
+\item การวัดประสิทธิผลข้อใดต่อไปนี้ที่ไม่เหมาะสมกับแบบจำลอง Regression?
 \begin{enumerate}[label=\alph*.]
-    \item MSE ยก error เป็นกำลังสองทำให้ค่า error ที่มากถูก amplify มากกว่า
-    \item MSE คำนวณค่า median แทนค่าเฉลี่ยจึงไม่ไว้วางใจ outlier
-    \item MSE หารด้วย $\sqrt{n}$ ส่วน MAE หารด้วย $n$
-    \item MSE ใช้ log scale แทน linear scale ในการวัด error
+    \item RMSE
+    \item ^2$ Score
+    \item MAE
+    \item Precision
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item ข้อใดเป็นข้อดีหลักของ k-Fold Cross-Validation เมื่อเทียบกับ Single Train/Test Split?
+\item แบบจำลอง Machine Learning ใดที่ใช้หลักการหาความเหมือน (Similarity) เป็นหลักในการทำนาย?
 \begin{enumerate}[label=\alph*.]
-    \item ใช้เวลา training น้อยกว่าเพราะ dataset เล็กลง
-    \item ลด variance ของการประเมิน model เพราะใช้ข้อมูลทุกส่วนเป็นทั้ง train และ validation
-    \item ไม่จำเป็นต้องสุ่มแบ่งข้อมูลก่อน
-    \item รับประกันว่า model จะไม่ overfit กับ training data
+    \item Logistic Regression
+    \item K-Nearest Neighbors (KNN)
+    \item Decision Tree
+    \item Linear Regression
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item DBSCAN มีข้อได้เปรียบเหนือ K-Means อย่างไร?
+\item สมการ Linear Regression ในข้อใดมี Interaction Term?
 \begin{enumerate}[label=\alph*.]
-    \item ทำงานเร็วกว่าบน dataset ขนาดใหญ่เสมอ
-    \item ไม่ต้องระบุจำนวน cluster ล่วงหน้า และจัดการ noise/outlier ได้
-    \item Cluster ที่ได้มี centroid ชัดเจนทุกครั้ง
-    \item ต้องการ memory น้อยกว่าเพราะไม่เก็บ proximity matrix
+    \item  = c_0 + c_1x_1$
+    \item  = c_0 + c_1x_1 + c_2x_2$
+    \item  = c_0 + c_1x_1 + c_2x_2 + c_3x_1x_2$
+    \item  = c_0 x_1 + c_1 x_2$
 \end{enumerate}
 
 \needspace{7\baselineskip}
-\item Model มี Training Accuracy = 97\%, Test Accuracy = 62\% สถานการณ์นี้คืออะไร?
+\item ข้อใดไม่ถูกต้องเกี่ยวกับ Hierarchical Clustering?
 \begin{enumerate}[label=\alph*.]
-    \item Overfitting
-    \item Underfitting
-    \item Good Generalization
-    \item High Bias, High Variance พร้อมกัน
+    \item Dendrogram เป็นตัวแทนที่แสดงให้เห็นถึงความใกล้เคียงของข้อมูล
+    \item ในขั้นตอนแรก ข้อมูลแต่ละตัวอย่างจะถูกถือว่าเป็นหนึ่ง Cluster
+    \item เราสามารถหากลุ่ม (Cluster) ได้โดยการตัด Dendrogram ที่ระดับความสูงที่เหมาะสม
+    \item ข้อมูลแต่ละตัวจะถูกกำหนดเข้าไปอยู่ใน Cluster ที่มี Centroid ใกล้ที่สุดในการอัปเดตแต่ละรอบ
 \end{enumerate}
 
 \end{enumerate}
@@ -119,7 +119,7 @@
     \item \texttt{max\_depth} ของ Decision Tree
     \item ค่า weight ที่ model เรียนรู้ระหว่าง Gradient Descent
     \item Learning Rate ($\alpha$) ใน Gradient Descent
-    \item จำนวนต้นไม้ใน Random Forest (\texttt{n\_estimators})
+    \item จำนวนคลัสเตอร์ (k) ใน K-Means (\texttt{n\_estimators})
     \item ค่า bias term ที่ optimize ผ่าน loss function
 \end{enumerate}
 
@@ -206,7 +206,7 @@
 \begin{enumerate}[label=\textbf{\arabic*.}]
 
 \needspace{8\baselineskip}
-\item \textbf{[Lecture 6]} เพราะเหตุใดจึงควรเลือกใช้ \textbf{Random Forest} แทน \textbf{Decision Tree} เดี่ยว ในกรณีที่ต้องการ model ที่ generalize ดี? อธิบายกลไกที่ทำให้ Random Forest ดีกว่า
+\item \textbf{[Lecture 6]} หากสร้างแบบจำลอง Decision Tree แล้วพบว่ามีปัญหา Overfitting (จำข้อมูล Training ได้เกือบหมด แต่ Test Accuracy ต่ำมาก) เราสามารถปรับ Hyperparameter ใดได้บ้างเพื่อแก้ปัญหานี้? (ยกตัวอย่างมา 2 พารามิเตอร์พร้อมอธิบายพอสังเขป)
 \vspace{3.5cm}
 
 \needspace{8\baselineskip}
@@ -246,25 +246,17 @@
 \section*{Part 4: Long Answer / Essay (30 คะแนน)}
 \textbf{คำชี้แจง:} ตอบอย่างครบถ้วน ใช้ตารางหรือเรียงความก็ได้ ประเมินจากความครบถ้วน ความถูกต้อง และความชัดเจน
 
-\subsection*{ข้อ 1 — เปรียบเทียบ 4 Classification Models (10 คะแนน)}
+\subsection*{ข้อ 1 — การเลือกใช้เทคนิค Machine Learning และ Algorithm (10 คะแนน)}
 
-ระบบบริษัท FinTech ต้องการสร้าง model จำแนกว่าลูกค้ารายใดมีความเสี่ยงสูง (High Risk) หรือต่ำ (Low Risk) ในการผิดนัดชำระสินเชื่อ Dataset มี 50,000 samples, 30 features, class imbalance (High Risk 15\%, Low Risk 85\%)
-
-\textbf{จงเปรียบเทียบ 4 Classification Algorithms ต่อไปนี้:}
+บริษัท E-Commerce แห่งหนึ่งมีโจทย์ทางธุรกิจ 3 โจทย์ด่านล่าง:
 \begin{itemize}
-    \item Decision Tree
-    \item k-Nearest Neighbors (KNN)
-    \item Naive Bayes
-    \item Random Forest
+    \item \textbf{โจทย์ A:} ทายว่าลูกค้าจะกดยกเลิกสั่งซื้อสินค้าหรือไม่ (บอกเป็น ใช่ / ไม่ใช่)
+    \item \textbf{โจทย์ B:} คาดการณ์ยอดใช้จ่ายของลูกค้าแต่ละคนในเดือนหน้า (มูลค่าเป็นบาท)
+    \item \textbf{โจทย์ C:} แบ่งกลุ่มลูกค้าเพื่อนำไปจัดแคมเปญโปรโมชันได้ตรงตามไลฟ์สไตล์
 \end{itemize}
 
-\textbf{การเปรียบเทียบต้องครอบคลุม:}
-\begin{enumerate}
-    \item หลักการทำงานโดยย่อ (1--2 ประโยค/algorithm)
-    \item ข้อดีและข้อจำกัดหลัก
-    \item ความเหมาะสมกับโจทย์นี้ โดยเฉพาะเรื่อง class imbalance และ dataset ขนาดใหญ่
-    \item สรุปว่าควรเลือก algorithm ใด พร้อมเหตุผล
-\end{enumerate}
+\textbf{จงเลือกจับคู่โจทย์ A, B, C กับเทคนิค ML ที่เหมาะสม (Classification, Regression, Clustering)} 
+พร้อมทั้งแนะนำ \textbf{Algorithm ที่เรียนมาในวิชานี้} อย่างน้อย 1 Algorithm สำหรับแต่ละโจทย์ และให้เหตุผลสนับสนุนสั้นๆ
 
 \vspace{9.5cm}
 
@@ -471,7 +463,7 @@
 \subsection*{Part 3: แนวคำตอบ}
 
 \begin{enumerate}[label=\textbf{\arabic*.}]
-    \item \textbf{Random Forest vs Decision Tree:} Random Forest ใช้ Bagging สร้าง Decision Trees หลายต้นจาก bootstrap samples ต่างกัน แต่ละต้น vote ผลลัพธ์ Ensemble หลายต้นลด variance ทำให้ model stable กว่า DT เดี่ยวที่ overfit ง่าย นอกจากนี้ Random Forest ยังสุ่มเลือก features แต่ละ split (feature subsampling) ลด correlation ระหว่างต้นไม้
+    \item \textbf{Decision Tree Hyperparameters:} เพื่อลด Overfitting สามารถปรับพารามิเตอร์เช่น (1) ลด \texttt{max\_depth} (จำกัดความลึกของต้นไม้ไม่ให้แตกกิ่งลึกเกินไป) หรือ (2) เพิ่ม \texttt{min\_samples\_split/leaf} (กำหนดจำนวน sample ขั้นต่ำในการแตกกิ่ง เพื่อไม่ให้โมเดลสร้างกิ่งสำหรับข้อมูลที่น้อยและเฉพาะเจาะจงเกินไป)
 
     \item \textbf{Overfitting:} Training 98\%, Test 62\% คือ Overfitting ชัดเจน Model จดจำ training data มากเกินไป วิธีแก้: (1) ลด max\_depth / เพิ่ม min\_samples\_split ใน DT (2) เพิ่ม L1/L2 Regularization (3) ใช้ k-Fold CV เพื่อ estimate performance จริง (4) เพิ่มข้อมูล training (5) Early Stopping
 
@@ -485,28 +477,25 @@
 \newpage
 \subsection*{Part 4: แนวคำตอบ}
 
-\subsubsection*{ข้อ 1: เปรียบเทียบ 4 Models}
+\subsubsection*{ข้อ 1: การเลือกใช้เทคนิค Machine Learning}
 
-\begin{center}
-\renewcommand{\arraystretch}{1.25}
-\small
-\begin{tabular}{|p{2.5cm}|p{3.8cm}|p{3.8cm}|p{3.5cm}|}
-    \hline
-    \rowcolor{cyan!15}
-    \textbf{Model} & \textbf{หลักการ} & \textbf{ข้อดี / ข้อจำกัด} & \textbf{FinTech Use Case} \\
-    \hline
-    Decision Tree & แบ่ง dataset ด้วย attribute ที่ให้ IG สูงสุด & ตีความง่าย / overfit ง่าย, ไม่ stable & ใช้ได้แต่ต้อง prune; อ่านผลง่าย \\
-    \hline
-    KNN & วัดระยะทางหา k เพื่อนบ้านแล้ว vote & ง่าย / ช้ามากกับ 50K samples; ไม่ดีกับ imbalanced & \textbf{ไม่เหมาะ} (dataset ใหญ่, class imbalance) \\
-    \hline
-    Naive Bayes & P(class|features) ด้วย Bayes + independence assumption & เร็ว / independence มักไม่จริง & ใช้ได้เบื้องต้น แต่ features อาจ correlate กัน \\
-    \hline
-    Random Forest & Ensemble DT หลายต้น + Bagging + Feature sampling & Robust, ลด overfit / ตีความยากกว่า & \textbf{เหมาะที่สุด}: จัดการ imbalance ได้ดี, ไม่ overfit, scale ได้ \\
-    \hline
-\end{tabular}
-\end{center}
+\textbf{โจทย์ A (Churn/Cancel Prediction):} 
+\begin{itemize}
+    \item \textbf{เทคนิค:} Classification (เพราะผลลัพธ์เป็นหมวดหมู่ ใช่/ไม่ใช่)
+    \item \textbf{Algorithm ยอมรับคำตอบเช่น:} Decision Tree, Logistic Regression, หรือ KNN (ตอบมา 1 อย่าง) โดยให้เหตุผลเช่น Decision Tree สามารถอธิบายเหตุผลด้วยกฎได้ชัดเจน
+\end{itemize}
 
-\textbf{สรุป:} ควรเลือก \textbf{Random Forest} เนื่องจาก: (1) ทน imbalanced class ได้ดีกว่าเมื่อใช้ class\_weight (2) generalize ดีกว่า DT เดี่ยว (3) scale ได้กับ 50K samples (4) feature importance ช่วยตีความได้
+\textbf{โจทย์ B (Spending Prediction):} 
+\begin{itemize}
+    \item \textbf{เทคนิค:} Regression (เพราะผลลัพธ์เป็นตัวเลขต่อเนื่อง หรือมูลค่าทางการเงิน)
+    \item \textbf{Algorithm ยอมรับคำตอบเช่น:} Linear Regression เป็นต้น โดยให้เหตุผลว่าสามารถหาความสัมพันธ์และน้ำหนักระหว่างตัวแปรกับยอดขายได้
+\end{itemize}
+
+\textbf{โจทย์ C (Customer Segmentation):} 
+\begin{itemize}
+    \item \textbf{เทคนิค:} Clustering / Unsupervised Learning (เพราะเป็นการแบ่งกลุ่มโดยไม่มีผลเฉลยล่วงหน้า)
+    \item \textbf{Algorithm ยอมรับคำตอบเช่น:} K-Means, K-Medoids, DBSCAN, หรือ Hierarchical Clustering โดยให้เหตุผลเช่น K-Means เหมาะกับการจัดกลุ่มให้มีจำนวนกลุ่มตามที่กำหนดไว้ได้รวดเร็ว
+\end{itemize}
 
 \subsubsection*{ข้อ 2: Cross-Validation Types}
 
@@ -823,8 +812,6 @@ d_{\text{Single}}(C_i, C_j) = \min_{x \in C_i, y \in C_j} d(x,y)
 \begin{itemize}
     \item \textbf{Decision Tree:} เลือก root ด้วย IG สูงสุด, Entropy=0 คือ pure node, Gini ใช้แทน Entropy ได้
     \item \textbf{KNN:} หา k เพื่อนบ้านใกล้สุด, ช้าตอน predict, ไม่มี training phase, ต้อง scale features
-    \item \textbf{Naive Bayes:} สมมติ features อิสระกัน ทำงานเร็วมาก เหมาะกับ text classification
-    \item \textbf{Random Forest = Bagging + Feature Subsampling} ลด variance ดีกว่า DT เดี่ยว feature importance ช่วยตีความ
     \item \textbf{Confusion Matrix จำ:} TP=ทำนายถูก-บวก, FP=ทำนายผิด-บวก (False Alarm), FN=พลาด positive (Missed)
     \item ในทางการแพทย์ FN อันตรายกว่า FP $\Rightarrow$ เน้น Recall; ในการกรอง spam เน้น Precision
 \end{itemize}
